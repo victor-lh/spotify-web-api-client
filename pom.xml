@@ -10,6 +10,32 @@
 	<name>Spotify Web API Client</name>
 	<description>Java client for the Spotify Web API.</description>
 
+	<developers>
+		<developer>
+			<id>victor-lh</id>
+			<name>Victor Latorre</name>
+			<email>victor.latorre@victorlh.com</email>
+			<url>http://victorlh.com/</url>
+			<timezone>Europe/Madrid</timezone>
+			<organization>Victor-lh</organization>
+			<organizationUrl>https://github.com/victor-lh</organizationUrl>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/victor-lh/spotify-web-api-client</url>
+		<connection>scm:git:git://github.com/victor-lh/spotify-web-api-client.git</connection>
+		<developerConnection>scm:git:git@github.com:victor-lh/spotify-web-api-client.git</developerConnection>
+	</scm>
+
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
@@ -17,6 +43,20 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.13</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.8.0-beta4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.11</version>
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
