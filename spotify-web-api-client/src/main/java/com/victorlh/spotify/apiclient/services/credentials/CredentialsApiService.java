@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @Builder
-public class CredentialsService {
+public class CredentialsApiService {
 
 	private static final String DEFAULT_AUTH_URI = "https://accounts.spotify.com";
 	private static final String AUTHORIZE_PATH = "authorize";

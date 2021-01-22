@@ -3,6 +3,7 @@ package com.victorlh.spotify.apiclient;
 import com.victorlh.spotify.apiclient.credentials.ClientApiCredentials;
 import com.victorlh.spotify.apiclient.credentials.ClientApiPrincipal;
 import com.victorlh.spotify.apiclient.credentials.Credentials;
+import com.victorlh.spotify.apiclient.services.credentials.CredentialsApiService;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -19,5 +20,9 @@ public class SpotifyApiClient {
 	public ClientApiCredentials getClientApiCredentials() {
 		ClientApiPrincipal clientApiPrincipal = new ClientApiPrincipal(apiClientId, apiClientSecret);
 		return new ClientApiCredentials(clientApiPrincipal);
+	}
+
+	public CredentialsApiService getCredentialService() {
+		return CredentialsApiService.builder().spotifyApiClient(this).build();
 	}
 }

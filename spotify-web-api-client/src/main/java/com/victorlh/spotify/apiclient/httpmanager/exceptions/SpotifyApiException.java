@@ -22,7 +22,7 @@ public class SpotifyApiException extends Exception {
 		return response.getMessage();
 	}
 
-	public Object getResponseBody() {
+	public ErrorObject getResponseBody() {
 		return response.parseResponse(ErrorObject.class);
 	}
 
