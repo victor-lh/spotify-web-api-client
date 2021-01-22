@@ -12,9 +12,9 @@ import lombok.ToString;
 @ToString
 public class AuthorizeUrlRequest {
 
-	private String redirectUri;
-	private String state;
-	private Boolean showDialog;
+	private final String redirectUri;
+	private final String state;
+	private final Boolean showDialog;
 	@Singular
-	private List<AuthorizationScope> scopes;
+	private final List<AuthorizationScope> scopes;
 }
