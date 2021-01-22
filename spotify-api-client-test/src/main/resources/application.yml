@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: spotify-api-client-test
+server:
+  port: 8080
+
+spotify:
+  clientId: 123
+  clientSecret: 123
+  redirectUrl: http://localhost:8080/redirect
