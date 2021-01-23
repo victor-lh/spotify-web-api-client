@@ -13,17 +13,37 @@ import org.apache.http.client.utils.URIBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Slf4j
 @RequiredArgsConstructor
 public class AbstractApiService {
 
+	private static final String DEFAULT_API_URI = "https://api.spotify.com";
+	private static final String API_VERSION = "v1";
+
 	protected final SpotifyApiClient spotifyApiClient;
-	protected final String url;
+
+	public URIBuilder getUriBuilder(String... pathSegments) {
+		ArrayList<String> paths = new ArrayList<>();
+		paths.add(API_VERSION);
+		paths.addAll(Arrays.asList(pathSegments));
+		try {
+			return new URIBuilder(DEFAULT_API_URI).setPathSegments(paths);
+		} catch (URISyntaxException e) {
+			log.error(e.getLocalizedMessage(), e);
+			throw new RuntimeException(e);
+		}
+	}
 
 	public URI getUri(String... pathSegments) {
+		URIBuilder uriBuilder = getUriBuilder(pathSegments);
+		return getUri(uriBuilder);
+	}
+
+	public URI getUri(URIBuilder uriBuilder) {
 		try {
-			URIBuilder uriBuilder = new URIBuilder(url).setPathSegments(pathSegments);
 			return uriBuilder.build();
 		} catch (URISyntaxException e) {
 			log.error(e.getLocalizedMessage(), e);

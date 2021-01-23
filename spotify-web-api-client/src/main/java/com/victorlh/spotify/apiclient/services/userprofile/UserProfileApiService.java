@@ -15,20 +15,18 @@ import java.net.URI;
 @Slf4j
 public class UserProfileApiService extends AbstractApiService {
 
-	private static final String DEFAULT_API_URI = "https://api.spotify.com";
-	private static final String API_VERSION = "v1";
 	private static final String ME_API_PATH = "me";
 	private static final String USERS_API_PATH = "users";
 
 	@Builder
-	private UserProfileApiService(@NonNull SpotifyApiClient spotifyApiClient, String url) {
-		super(spotifyApiClient, url == null ? DEFAULT_API_URI : url);
+	private UserProfileApiService(@NonNull SpotifyApiClient spotifyApiClient) {
+		super(spotifyApiClient);
 	}
 
 	public PrivateUserObject getMeProfile() throws SpotifyGeneralApiException {
 		log.trace("Call UserProfileApiService#getMeProfile");
 
-		URI uri = getUri(API_VERSION, ME_API_PATH);
+		URI uri = getUri(ME_API_PATH);
 		log.debug("Generada Me profile URL: {}", uri);
 
 		HttpResponseWrapper response = doGet(uri);
@@ -39,7 +37,7 @@ public class UserProfileApiService extends AbstractApiService {
 
 	public PublicUserObject getUserProfile(String userId) throws SpotifyGeneralApiException {
 		log.trace("Call UserProfileApiService#getUserProfile: {}", userId);
-		URI uri = getUri(API_VERSION, USERS_API_PATH, userId);
+		URI uri = getUri(USERS_API_PATH, userId);
 		log.debug("Generada User profile URL: {}", uri);
 
 		HttpResponseWrapper response = doGet(uri);
