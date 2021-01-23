@@ -55,7 +55,11 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
-			return httpManger.doGet(uri);
+			HttpResponseWrapper response = httpManger.doGet(uri);
+			if (log.isDebugEnabled()) {
+				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+			}
+			return response;
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
@@ -68,7 +72,11 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
-			return httpManger.doDelete(uri);
+			HttpResponseWrapper response = httpManger.doDelete(uri);
+			if (log.isDebugEnabled()) {
+				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+			}
+			return response;
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
@@ -81,7 +89,11 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
-			return httpManger.doPost(uri, data);
+			HttpResponseWrapper response = httpManger.doPost(uri, data);
+			if (log.isDebugEnabled()) {
+				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+			}
+			return response;
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
@@ -94,7 +106,11 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
-			return httpManger.doPut(uri, data);
+			HttpResponseWrapper response = httpManger.doPut(uri, data);
+			if (log.isDebugEnabled()) {
+				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+			}
+			return response;
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);

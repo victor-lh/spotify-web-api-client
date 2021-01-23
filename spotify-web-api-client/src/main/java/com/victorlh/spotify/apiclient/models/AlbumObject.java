@@ -1,9 +1,15 @@
 package com.victorlh.spotify.apiclient.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AlbumObject {
 
 	@JsonProperty("album_type")
@@ -28,7 +34,9 @@ public class AlbumObject {
 	@JsonProperty("release_date_precision")
 	private String releaseDatePrecision;
 	private AlbumRestrictionObject restrictions;
-	private List<SimplifiedTrackObject> tracks;
+	private PagingObject<SimplifiedTrackObject> tracks;
+	@JsonProperty("total_tracks")
+	private Integer totalTracks;
 	private String type;
 	private String uri;
 }

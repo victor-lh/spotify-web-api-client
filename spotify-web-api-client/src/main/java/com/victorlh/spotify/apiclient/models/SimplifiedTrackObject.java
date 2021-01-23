@@ -13,7 +13,7 @@ import java.util.List;
 public class SimplifiedTrackObject {
 
 	private List<SimplifiedArtistObject> artists;
-	@JsonProperty("avalidable_markets")
+	@JsonProperty("available_markets")
 	private List<String> availableMarkets;
 	@JsonProperty("disc_number")
 	private Integer discNumber;

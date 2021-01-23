@@ -26,6 +26,7 @@ import java.util.List;
 public class AlbumsApiService extends AbstractApiService {
 
 	private static final String ALBUMS_PATH = "albums";
+	private static final String TRACKS_PATH = "tracks";
 
 	@Builder
 	public AlbumsApiService(SpotifyApiClient spotifyApiClient) {
@@ -56,10 +57,7 @@ public class AlbumsApiService extends AbstractApiService {
 			uriBuilder.addParameter("market", market.getAlpha2());
 		}
 		URI uri = getUri(uriBuilder);
-		log.debug("Generada Multiple albums URL: {}", uri);
-
 		HttpResponseWrapper response = doGet(uri);
-		log.debug("Request Get Multiple albums: {}", response.toString());
 		return response.parseResponse(ListAlbumsObjetc.class);
 	}
 
@@ -80,10 +78,7 @@ public class AlbumsApiService extends AbstractApiService {
 			uriBuilder.addParameter("market", market.getAlpha2());
 		}
 		URI uri = getUri(uriBuilder);
-		log.debug("Generada Album URL: {}", uri);
-
 		HttpResponseWrapper response = doGet(uri);
-		log.debug("Request Get Album: {}", response.toString());
 		return response.parseResponse(AlbumObject.class);
 	}
 
@@ -98,7 +93,7 @@ public class AlbumsApiService extends AbstractApiService {
 			throw new SpotifyWebApiClientException("AlbumId is required");
 		}
 
-		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH, albumId);
+		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH, albumId, TRACKS_PATH);
 
 		CountryCode market = albumTracksRequest.getMarket();
 		if (market != null) {
@@ -116,26 +111,20 @@ public class AlbumsApiService extends AbstractApiService {
 		}
 
 		URI uri = getUri(uriBuilder);
-		log.debug("Generada Album tracks URL: {}", uri);
-
 		HttpResponseWrapper response = doGet(uri);
-		log.debug("Request Get Album tracks: {}", response.toString());
 		TypeReference<PagingObject<SimplifiedTrackObject>> typeReference = new TypeReference<>() {
 		};
 		return response.parseResponse(typeReference);
 	}
 
-	public PagingObject<SimplifiedTrackObject> getAlbumTracks(String next) throws SpotifyGeneralApiException {
-		log.trace("Call AlbumsApiService#getAlbumTracks: {}", next);
-		if (StringUtils.isEmpty(next)) {
+	public PagingObject<SimplifiedTrackObject> getAlbumTracks(String paginationUrl) throws SpotifyGeneralApiException {
+		log.trace("Call AlbumsApiService#getAlbumTracks: {}", paginationUrl);
+		if (StringUtils.isEmpty(paginationUrl)) {
 			throw new SpotifyWebApiClientException("next is required");
 		}
 
-		URI uri = URI.create(next);
-		log.debug("Generada Album tracks next URL: {}", uri);
-
+		URI uri = URI.create(paginationUrl);
 		HttpResponseWrapper response = doGet(uri);
-		log.debug("Request Get Album tracks: {}", response.toString());
 		TypeReference<PagingObject<SimplifiedTrackObject>> typeReference = new TypeReference<>() {
 		};
 		return response.parseResponse(typeReference);

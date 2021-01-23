@@ -27,22 +27,14 @@ public class UserProfileApiService extends AbstractApiService {
 		log.trace("Call UserProfileApiService#getMeProfile");
 
 		URI uri = getUri(ME_API_PATH);
-		log.debug("Generada Me profile URL: {}", uri);
-
 		HttpResponseWrapper response = doGet(uri);
-		log.debug("Request Me profile: {}", response.toString());
-
 		return response.parseResponse(PrivateUserObject.class);
 	}
 
 	public PublicUserObject getUserProfile(String userId) throws SpotifyGeneralApiException {
 		log.trace("Call UserProfileApiService#getUserProfile: {}", userId);
 		URI uri = getUri(USERS_API_PATH, userId);
-		log.debug("Generada User profile URL: {}", uri);
-
 		HttpResponseWrapper response = doGet(uri);
-		log.debug("Request User profile: {}", response.toString());
-
 		return response.parseResponse(PublicUserObject.class);
 	}
 }

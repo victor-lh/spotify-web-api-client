@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 
 import java.io.IOException;
@@ -15,7 +16,6 @@ import java.io.InputStream;
 
 @Getter
 @ToString
-@RequiredArgsConstructor
 @Slf4j
 public class HttpResponseWrapper {
 
@@ -23,16 +23,24 @@ public class HttpResponseWrapper {
 	private final String message;
 	@Getter(AccessLevel.NONE)
 	@ToString.Exclude
-	private final HttpEntity entity;
+	private final HttpEntityWrapper entity;
+
+	public HttpResponseWrapper(int status, String message, HttpEntity entity) {
+		this.status = status;
+		this.message = message;
+		this.entity = new HttpEntityWrapper(entity);
+	}
+
+	public String responseBodyString() {
+		byte[] data = entity.getData();
+		return new String(data);
+	}
 
 	public <T> T parseResponse(Class<T> tClass) {
+		byte[] data = entity.getData();
 		try {
-			InputStream content = getBodyIS();
-			if (content == null) {
-				return null;
-			}
 			ObjectMapper objectMapper = new ObjectMapper();
-			return objectMapper.readValue(content, tClass);
+			return objectMapper.readValue(data, tClass);
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
@@ -44,26 +52,41 @@ public class HttpResponseWrapper {
 	}
 
 	public <T> PagingObject<T> parseResponse(TypeReference<PagingObject<T>> typeReference) {
+		byte[] data = entity.getData();
 		try {
-			InputStream content = getBodyIS();
-			if (content == null) {
-				return null;
-			}
 			ObjectMapper objectMapper = new ObjectMapper();
-			return objectMapper.readValue(content, typeReference);
+			return objectMapper.readValue(data, typeReference);
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
 
-	private InputStream getBodyIS() throws IOException {
-		if (entity == null) {
-			return null;
+	@RequiredArgsConstructor
+	@Getter
+	private static final class HttpEntityWrapper {
+
+		private final HttpEntity entity;
+		private byte[] data;
+
+		public synchronized byte[] getData() {
+			if (data == null) {
+				try {
+					InputStream bodyIS = getBodyIS();
+					assert bodyIS != null;
+					data = IOUtils.toByteArray(bodyIS);
+				} catch (IOException e) {
+					log.error(e.getLocalizedMessage(), e);
+					throw new RuntimeException(e);
+				}
+			}
+			return data;
 		}
-		if (entity.getContentLength() == 0) {
-			return null;
+
+		private InputStream getBodyIS() throws IOException {
+			assert entity != null;
+			assert entity.getContentLength() > 0;
+			return entity.getContent();
 		}
-		return entity.getContent();
 	}
 }
