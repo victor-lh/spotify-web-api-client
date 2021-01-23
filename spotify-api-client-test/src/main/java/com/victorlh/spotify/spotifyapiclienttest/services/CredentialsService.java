@@ -9,4 +9,6 @@ public interface CredentialsService {
 	URI getUriAuthorization();
 
 	Credentials changeCodeByCredentials(String code);
+
+	Credentials refreshToken();
 }

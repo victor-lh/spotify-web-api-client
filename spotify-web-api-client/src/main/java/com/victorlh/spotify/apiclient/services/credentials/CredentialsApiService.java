@@ -3,6 +3,7 @@ package com.victorlh.spotify.apiclient.services.credentials;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.credentials.ClientApiCredentials;
 import com.victorlh.spotify.apiclient.credentials.Credentials;
+import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpManager;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.httpmanager.exceptions.SpotifyApiException;
@@ -71,7 +72,7 @@ public class CredentialsApiService {
 		try {
 			URIBuilder uriBuilder = new URIBuilder(authUri).setPathSegments(API_PATH, TOKEN_PATH);
 			uri = uriBuilder.build();
-			log.debug("Generada Authorize URL: {}", uri);
+			log.debug("Generada Get Token URL: {}", uri);
 		} catch (URISyntaxException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
@@ -83,6 +84,45 @@ public class CredentialsApiService {
 		try {
 			response = httpManger.doPost(uri, data);
 			log.debug("Request token: {}", response.toString());
+		} catch (IOException e) {
+			log.error(e.getLocalizedMessage(), e);
+			throw new RuntimeException(e);
+		}
+
+		return response.parseResponse(Credentials.class);
+	}
+
+	public Credentials refreshToken() throws SpotifyApiException {
+		Credentials credentials = this.spotifyApiClient.getCredentials();
+		log.trace("Call CredentialsService#refreshToken: {}", credentials);
+
+		//Validation
+		if(credentials == null || StringUtils.isEmpty(credentials.getRefreshToken())) {
+			throw new SpotifyWebApiClientException("refresh_token not found");
+		}
+
+		String refreshToken = credentials.getRefreshToken();
+
+		HashMap<String, String> data = new HashMap<>();
+		data.put("grant_type", "refresh_token");
+		data.put("refresh_token", refreshToken);
+
+		URI uri;
+		try {
+			URIBuilder uriBuilder = new URIBuilder(authUri).setPathSegments(API_PATH, TOKEN_PATH);
+			uri = uriBuilder.build();
+			log.debug("Generada refresh_token URL: {}", uri);
+		} catch (URISyntaxException e) {
+			log.error(e.getLocalizedMessage(), e);
+			throw new RuntimeException(e);
+		}
+
+		ClientApiCredentials clientApiCredentials = spotifyApiClient.getClientApiCredentials();
+		HttpManager httpManger = HttpManager.createFormUrlEncodedHttpManger(clientApiCredentials);
+		HttpResponseWrapper response;
+		try {
+			response = httpManger.doPost(uri, data);
+			log.debug("Request token by refresh_token: {}", response.toString());
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);

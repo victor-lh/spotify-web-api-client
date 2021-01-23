@@ -55,9 +55,24 @@ public class CredentialsServiceImpl implements CredentialsService {
 				.redirectUri(redirectUrl)
 				.build();
 
-		Credentials credentials = null;
+		Credentials credentials;
 		try {
 			credentials = credentialService.requestToken(credentialsRequest);
+		} catch (SpotifyApiException e) {
+			log.error(e.getLocalizedMessage(), e);
+			throw new SpotifyApiExceptionRuntime(e);
+		}
+		credentialsWrapper.setCredentials(credentials);
+		return credentials;
+	}
+
+	@Override
+	public Credentials refreshToken() {
+		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
+		CredentialsApiService credentialService = spotifyApiClient.getCredentialService();
+		Credentials credentials;
+		try {
+			credentials = credentialService.refreshToken();
 		} catch (SpotifyApiException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new SpotifyApiExceptionRuntime(e);

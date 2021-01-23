@@ -3,6 +3,7 @@ package com.victorlh.spotify.spotifyapiclienttest.controllers;
 import com.victorlh.spotify.apiclient.credentials.Credentials;
 import com.victorlh.spotify.spotifyapiclienttest.services.CredentialsService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,11 @@ public class CredentialsController {
 	@GetMapping("/authorization")
 	public String getAuthorizationUrl() {
 		return credentialsService.getUriAuthorization().toString();
+	}
+
+	@PostMapping("/refreshToken")
+	public Credentials refreshToken() {
+		return credentialsService.refreshToken();
 	}
 
 	@GetMapping("/redirect")
