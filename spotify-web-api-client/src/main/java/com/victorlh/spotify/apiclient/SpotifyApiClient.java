@@ -5,6 +5,7 @@ import com.victorlh.spotify.apiclient.credentials.ClientApiPrincipal;
 import com.victorlh.spotify.apiclient.credentials.Credentials;
 import com.victorlh.spotify.apiclient.credentials.TokenApiCredentials;
 import com.victorlh.spotify.apiclient.services.credentials.CredentialsApiService;
+import com.victorlh.spotify.apiclient.services.userprofile.UserProfileApiService;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -30,5 +31,9 @@ public class SpotifyApiClient {
 
     public CredentialsApiService getCredentialService() {
         return CredentialsApiService.builder().spotifyApiClient(this).build();
+    }
+
+    public UserProfileApiService getUserProfileApiService() {
+        return UserProfileApiService.builder().spotifyApiClient(this).build();
     }
 }

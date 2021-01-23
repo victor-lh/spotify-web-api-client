@@ -1,6 +1,5 @@
 package com.victorlh.spotify.spotifyapiclienttest;
 
-import com.victorlh.spotify.spotifyapiclienttest.services.CredentialsWrapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

@@ -73,7 +73,7 @@ public abstract class AbstractHttpManager implements HttpManager {
 	}
 
 	protected void addAuthorizationHeader(HttpRequest httpRequest) {
-		if (credentials != null) {
+		if (credentials != null && credentials.getUserPrincipal() != null) {
 			String value = credentials.authorizationHttpHeader();
 			httpRequest.addHeader(HttpHeaders.AUTHORIZATION, value);
 		}

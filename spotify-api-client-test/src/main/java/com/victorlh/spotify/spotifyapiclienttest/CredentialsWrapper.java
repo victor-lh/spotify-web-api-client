@@ -1,4 +1,4 @@
-package com.victorlh.spotify.spotifyapiclienttest.services;
+package com.victorlh.spotify.spotifyapiclienttest;
 
 import com.victorlh.spotify.apiclient.credentials.Credentials;
 import lombok.Data;

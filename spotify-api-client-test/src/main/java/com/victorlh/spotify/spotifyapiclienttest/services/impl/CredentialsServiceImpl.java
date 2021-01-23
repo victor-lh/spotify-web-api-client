@@ -9,13 +9,14 @@ import com.victorlh.spotify.apiclient.services.credentials.models.AuthorizeUrlRe
 import com.victorlh.spotify.apiclient.services.credentials.models.CredentialsRequest;
 import com.victorlh.spotify.spotifyapiclienttest.exceptions.SpotifyApiExceptionRuntime;
 import com.victorlh.spotify.spotifyapiclienttest.services.CredentialsService;
-import com.victorlh.spotify.spotifyapiclienttest.services.CredentialsWrapper;
+import com.victorlh.spotify.spotifyapiclienttest.CredentialsWrapper;
 import com.victorlh.spotify.spotifyapiclienttest.services.SpotifyClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Service
@@ -38,7 +39,7 @@ public class CredentialsServiceImpl implements CredentialsService {
 		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
 		CredentialsApiService credentialService = spotifyApiClient.getCredentialService();
 		AuthorizeUrlRequest authorizeUrlRequest = AuthorizeUrlRequest.builder()
-				.scopes(Collections.singletonList(AuthorizationScope.USER_TOP_READ))
+				.scopes(Arrays.asList(AuthorizationScope.values()))
 				.redirectUri(redirectUrl)
 				.build();
 

@@ -1,7 +1,7 @@
 package com.victorlh.spotify.spotifyapiclienttest.services.impl;
 
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
-import com.victorlh.spotify.spotifyapiclienttest.services.CredentialsWrapper;
+import com.victorlh.spotify.spotifyapiclienttest.CredentialsWrapper;
 import com.victorlh.spotify.spotifyapiclienttest.services.SpotifyClientService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
