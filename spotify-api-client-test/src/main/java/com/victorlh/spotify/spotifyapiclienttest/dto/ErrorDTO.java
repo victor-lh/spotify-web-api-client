@@ -1,6 +1,6 @@
 package com.victorlh.spotify.spotifyapiclienttest.dto;
 
-import com.victorlh.spotify.apiclient.httpmanager.ErrorObject;
+import com.victorlh.spotify.apiclient.httpmanager.models.AuthErrorObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +12,5 @@ public class ErrorDTO {
 
 	private int status;
 	private String message;
-	private ErrorObject error;
+	private Object error;
 }

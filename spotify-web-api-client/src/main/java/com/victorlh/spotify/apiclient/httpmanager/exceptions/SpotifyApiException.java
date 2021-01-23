@@ -1,34 +1,34 @@
 package com.victorlh.spotify.apiclient.httpmanager.exceptions;
 
-import com.victorlh.spotify.apiclient.httpmanager.ErrorObject;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
-
-import java.io.IOException;
 
 public class SpotifyApiException extends Exception {
 
-	private final HttpResponseWrapper response;
+    private final HttpResponseWrapper response;
 
-	public SpotifyApiException(HttpResponseWrapper response) {
-		super(response.getMessage());
-		this.response = response;
-	}
+    public SpotifyApiException(HttpResponseWrapper response) {
+        super(response.getMessage());
+        this.response = response;
+    }
 
-	public int getStatusCode() {
-		return response.getStatus();
-	}
+    public int getStatusCode() {
+        return response.getStatus();
+    }
 
-	public String getResponseMessage() {
-		return response.getMessage();
-	}
+    public String getResponseMessage() {
+        return response.getMessage();
+    }
 
-	public ErrorObject getResponseBody() {
-		return response.parseResponse(ErrorObject.class);
-	}
+    public <T> T getResponseBody(Class<T> tClass) {
+        return response.parseResponse(tClass);
+    }
 
-	@Override
-	public String getLocalizedMessage() {
-		return response.toString();
-	}
+    @Override
+    public String getLocalizedMessage() {
+        return response.toString();
+    }
 
+    public HttpResponseWrapper getResponse() {
+        return response;
+    }
 }
