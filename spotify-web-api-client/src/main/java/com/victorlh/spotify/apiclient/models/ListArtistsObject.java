@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ListArtistsObject {
 
-	private List<AlbumObject> artists;
+	private List<ArtistObject> artists;
 }

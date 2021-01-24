@@ -29,6 +29,8 @@ public class SimplifiedAlbumObject {
 	private String releaseDate;
 	@JsonProperty("release_date_precision")
 	private String releaseDatePrecision;
+	@JsonProperty("total_tracks")
+	private Integer totalTracks;
 	private AlbumRestrictionObject restrictions;
 	private String type;
 	private String uri;

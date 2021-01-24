@@ -12,4 +12,4 @@ spotify:
 logging:
   level:
     root: info
-    com.victorlh.spotify.apiclient: debug
+    com.victorlh.spotify.apiclient: trace

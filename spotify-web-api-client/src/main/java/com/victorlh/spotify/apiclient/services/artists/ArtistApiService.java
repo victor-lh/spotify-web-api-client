@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ArtistApiService extends AbstractApiService {
 
-	private static final String ARTISTS_PATH = "artist";
+	private static final String ARTISTS_PATH = "artists";
 	private static final String TOP_TRACKS_PATH = "top-tracks";
 	private static final String RELATED_ARTISTS_PATH = "related-artists";
 	private static final String ALBUMS_PATH = "albums";
@@ -70,11 +70,10 @@ public class ArtistApiService extends AbstractApiService {
 		String artistId = request.getArtistId();
 		assert StringUtils.isNotEmpty(artistId);
 
-		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH, artistId, TOP_TRACKS_PATH);
 		CountryCode market = request.getMarket();
-		if (market != null) {
-			uriBuilder = uriBuilder.addParameter("market", market.getAlpha2());
-		}
+		assert market != null;
+		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH, artistId, TOP_TRACKS_PATH);
+		uriBuilder = uriBuilder.addParameter("market", market.getAlpha2());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
 		return response.parseResponse(ListTracksObject.class);

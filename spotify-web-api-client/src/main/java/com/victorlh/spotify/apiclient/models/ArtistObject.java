@@ -14,7 +14,7 @@ public class ArtistObject {
 
 	@JsonProperty("external_urls")
 	private ExternalUrlObject externalUrls;
-	private FollowersObject followersObject;
+	private FollowersObject followers;
 	private List<String> genres;
 	private String href;
 	private String id;

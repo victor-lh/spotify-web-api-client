@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ListTracksObject {
 
-	private List<AlbumObject> tracks;
+	private List<TrackObject> tracks;
 }
