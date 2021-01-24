@@ -1,7 +1,6 @@
 package com.victorlh.spotify.apiclient.services.albums;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.neovisionaries.i18n.CountryCode;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
@@ -38,8 +37,6 @@ public class AlbumsApiService extends AbstractApiService {
 		assert multipleAlbumsRequest != null;
 
 		List<String> ids = multipleAlbumsRequest.getIds();
-		CountryCode market = multipleAlbumsRequest.getMarket();
-
 		if (ids == null || ids.isEmpty()) {
 			throw new SpotifyWebApiClientException("Ids list is required");
 		}
@@ -50,9 +47,7 @@ public class AlbumsApiService extends AbstractApiService {
 		String idsCollect = String.join(",", ids);
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH);
 		uriBuilder.addParameter("ids", idsCollect);
-		if (market != null) {
-			uriBuilder.addParameter("market", market.getAlpha2());
-		}
+		addMarketToUriBuilder(uriBuilder, multipleAlbumsRequest.getMarket());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
 		return response.parseResponse(ListAlbumsObject.class);
@@ -65,15 +60,12 @@ public class AlbumsApiService extends AbstractApiService {
 		}
 
 		String albumId = albumRequest.getAlbumId();
-		CountryCode market = albumRequest.getMarket();
 		if (StringUtils.isEmpty(albumId)) {
 			throw new SpotifyWebApiClientException("AlbumId is required");
 		}
 
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH, albumId);
-		if (market != null) {
-			uriBuilder.addParameter("market", market.getAlpha2());
-		}
+		addMarketToUriBuilder(uriBuilder, albumRequest.getMarket());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
 		return response.parseResponse(AlbumObject.class);
@@ -91,21 +83,8 @@ public class AlbumsApiService extends AbstractApiService {
 		}
 
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH, albumId, TRACKS_PATH);
-
-		CountryCode market = albumTracksRequest.getMarket();
-		if (market != null) {
-			uriBuilder.addParameter("market", market.getAlpha2());
-		}
-
-		Integer limit = albumTracksRequest.getLimit();
-		if (limit != null) {
-			if (limit < 1) {
-				throw new SpotifyWebApiClientException("Limit minimum 1");
-			} else if (limit > 50) {
-				throw new SpotifyWebApiClientException("Limit maximum 50");
-			}
-			uriBuilder.addParameter("limit", limit.toString());
-		}
+		addLimitToUriBuilder(uriBuilder, albumTracksRequest.getLimit());
+		addMarketToUriBuilder(uriBuilder, albumTracksRequest.getMarket());
 
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);

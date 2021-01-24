@@ -96,19 +96,8 @@ public class ArtistApiService extends AbstractApiService {
 		assert StringUtils.isNotEmpty(artistId);
 
 		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH, artistId, ALBUMS_PATH);
-		CountryCode market = request.getMarket();
-		if (market != null) {
-			uriBuilder = uriBuilder.addParameter("market", market.getAlpha2());
-		}
-		Integer limit = request.getLimit();
-		if (limit != null) {
-			if (limit < 1) {
-				throw new SpotifyWebApiClientException("Limit minimum 1");
-			} else if (limit > 50) {
-				throw new SpotifyWebApiClientException("Limit maximum 50");
-			}
-			uriBuilder = uriBuilder.addParameter("limit", limit.toString());
-		}
+		addLimitToUriBuilder(uriBuilder, request.getLimit());
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
 		List<ArtistAlbumsRequest.AlbumTypes> types = request.getTypes();
 		if (types != null && !types.isEmpty()) {
 			String typesCollect = types.stream().map(Enum::name).collect(Collectors.joining(","));

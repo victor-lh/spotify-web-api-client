@@ -1,8 +1,10 @@
 package com.victorlh.spotify.apiclient.services;
 
+import com.neovisionaries.i18n.CountryCode;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.credentials.TokenApiCredentials;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
+import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpManager;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.httpmanager.exceptions.SpotifyApiException;
@@ -25,7 +27,7 @@ public class AbstractApiService {
 
 	protected final SpotifyApiClient spotifyApiClient;
 
-	public URIBuilder getUriBuilder(String... pathSegments) {
+	protected URIBuilder getUriBuilder(String... pathSegments) {
 		ArrayList<String> paths = new ArrayList<>();
 		paths.add(API_VERSION);
 		paths.addAll(Arrays.asList(pathSegments));
@@ -37,12 +39,12 @@ public class AbstractApiService {
 		}
 	}
 
-	public URI getUri(String... pathSegments) {
+	protected URI getUri(String... pathSegments) {
 		URIBuilder uriBuilder = getUriBuilder(pathSegments);
 		return getUri(uriBuilder);
 	}
 
-	public URI getUri(URIBuilder uriBuilder) {
+	protected URI getUri(URIBuilder uriBuilder) {
 		try {
 			return uriBuilder.build();
 		} catch (URISyntaxException e) {
@@ -51,7 +53,7 @@ public class AbstractApiService {
 		}
 	}
 
-	public HttpResponseWrapper doGet(URI uri) throws SpotifyGeneralApiException {
+	protected HttpResponseWrapper doGet(URI uri) throws SpotifyGeneralApiException {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
@@ -68,7 +70,7 @@ public class AbstractApiService {
 		}
 	}
 
-	public HttpResponseWrapper doDelete(URI uri) throws SpotifyGeneralApiException {
+	protected HttpResponseWrapper doDelete(URI uri) throws SpotifyGeneralApiException {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
@@ -85,7 +87,7 @@ public class AbstractApiService {
 		}
 	}
 
-	public HttpResponseWrapper doPost(URI uri, Object data) throws SpotifyGeneralApiException {
+	protected HttpResponseWrapper doPost(URI uri, Object data) throws SpotifyGeneralApiException {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
@@ -102,7 +104,7 @@ public class AbstractApiService {
 		}
 	}
 
-	public HttpResponseWrapper doPut(URI uri, Object data) throws SpotifyGeneralApiException {
+	protected HttpResponseWrapper doPut(URI uri, Object data) throws SpotifyGeneralApiException {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
@@ -116,6 +118,27 @@ public class AbstractApiService {
 			throw new RuntimeException(e);
 		} catch (SpotifyApiException e) {
 			throw new SpotifyGeneralApiException(e.getResponse());
+		}
+	}
+
+	protected void addLimitToUriBuilder(URIBuilder uriBuilder, Integer limit) {
+		addLimitToUriBuilder(uriBuilder,limit, 50);
+	}
+
+	protected void addLimitToUriBuilder(URIBuilder uriBuilder, Integer limit, Integer max) {
+		if(limit != null) {
+			if (limit < 1) {
+				throw new SpotifyWebApiClientException("Limit minimum 1");
+			} else if (limit > 50) {
+				throw new SpotifyWebApiClientException("Limit maximum " + max);
+			}
+			uriBuilder.addParameter("limit", limit.toString());
+		}
+	}
+
+	protected void addMarketToUriBuilder(URIBuilder uriBuilder, CountryCode market) {
+		if(market != null) {
+			uriBuilder.addParameter("market", market.getAlpha2());
 		}
 	}
 }
