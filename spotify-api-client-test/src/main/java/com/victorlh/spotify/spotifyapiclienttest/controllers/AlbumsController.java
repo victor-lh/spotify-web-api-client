@@ -2,7 +2,7 @@ package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
 import com.victorlh.spotify.apiclient.models.AlbumObject;
-import com.victorlh.spotify.apiclient.models.ListAlbumsObjetc;
+import com.victorlh.spotify.apiclient.models.ListAlbumsObject;
 import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedTrackObject;
 import com.victorlh.spotify.apiclient.services.albums.models.AlbumRequest;
@@ -25,7 +25,7 @@ public class AlbumsController {
 	}
 
 	@GetMapping({"", "/"})
-	public ListAlbumsObjetc getListAlbums(@RequestParam("ids") List<String> ids, @RequestParam(value = "market", required = false) String market) {
+	public ListAlbumsObject getListAlbums(@RequestParam("ids") List<String> ids, @RequestParam(value = "market", required = false) String market) {
 		MultipleAlbumsRequest.MultipleAlbumsRequestBuilder builder = MultipleAlbumsRequest.builder()
 				.ids(ids);
 		if (StringUtils.isNotEmpty(market)) {

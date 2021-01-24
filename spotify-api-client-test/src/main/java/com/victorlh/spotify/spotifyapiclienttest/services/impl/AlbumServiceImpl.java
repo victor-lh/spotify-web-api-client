@@ -3,7 +3,7 @@ package com.victorlh.spotify.spotifyapiclienttest.services.impl;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.models.AlbumObject;
-import com.victorlh.spotify.apiclient.models.ListAlbumsObjetc;
+import com.victorlh.spotify.apiclient.models.ListAlbumsObject;
 import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedTrackObject;
 import com.victorlh.spotify.apiclient.services.albums.AlbumsApiService;
@@ -25,7 +25,7 @@ public class AlbumServiceImpl implements AlbumService {
 	}
 
 	@Override
-	public ListAlbumsObjetc getAlbumsList(MultipleAlbumsRequest multipleAlbumsRequest) {
+	public ListAlbumsObject getAlbumsList(MultipleAlbumsRequest multipleAlbumsRequest) {
 		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
 		AlbumsApiService albumsApiService = spotifyApiClient.getAlbumsApiService();
 		try {

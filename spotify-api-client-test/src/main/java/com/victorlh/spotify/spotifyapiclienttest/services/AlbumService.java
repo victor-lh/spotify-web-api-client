@@ -1,7 +1,7 @@
 package com.victorlh.spotify.spotifyapiclienttest.services;
 
 import com.victorlh.spotify.apiclient.models.AlbumObject;
-import com.victorlh.spotify.apiclient.models.ListAlbumsObjetc;
+import com.victorlh.spotify.apiclient.models.ListAlbumsObject;
 import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedTrackObject;
 import com.victorlh.spotify.apiclient.services.albums.models.AlbumRequest;
@@ -10,7 +10,7 @@ import com.victorlh.spotify.apiclient.services.albums.models.MultipleAlbumsReque
 
 public interface AlbumService {
 
-	ListAlbumsObjetc getAlbumsList(MultipleAlbumsRequest multipleAlbumsRequest);
+	ListAlbumsObject getAlbumsList(MultipleAlbumsRequest multipleAlbumsRequest);
 
 	AlbumObject getAlbum(AlbumRequest albumRequest);
 

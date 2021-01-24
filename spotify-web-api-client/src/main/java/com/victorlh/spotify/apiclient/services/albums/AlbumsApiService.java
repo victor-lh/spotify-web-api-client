@@ -7,7 +7,7 @@ import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.models.AlbumObject;
-import com.victorlh.spotify.apiclient.models.ListAlbumsObjetc;
+import com.victorlh.spotify.apiclient.models.ListAlbumsObject;
 import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedTrackObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
@@ -33,12 +33,9 @@ public class AlbumsApiService extends AbstractApiService {
 		super(spotifyApiClient);
 	}
 
-	public ListAlbumsObjetc getMultipleAlbums(MultipleAlbumsRequest multipleAlbumsRequest) throws SpotifyGeneralApiException {
+	public ListAlbumsObject getMultipleAlbums(MultipleAlbumsRequest multipleAlbumsRequest) throws SpotifyGeneralApiException {
 		log.trace("Call AlbumsApiService#getMultipleAlbums: {}", multipleAlbumsRequest);
-
-		if (multipleAlbumsRequest == null) {
-			throw new IllegalArgumentException();
-		}
+		assert multipleAlbumsRequest != null;
 
 		List<String> ids = multipleAlbumsRequest.getIds();
 		CountryCode market = multipleAlbumsRequest.getMarket();
@@ -58,7 +55,7 @@ public class AlbumsApiService extends AbstractApiService {
 		}
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
-		return response.parseResponse(ListAlbumsObjetc.class);
+		return response.parseResponse(ListAlbumsObject.class);
 	}
 
 	public AlbumObject getAlbum(AlbumRequest albumRequest) throws SpotifyGeneralApiException {

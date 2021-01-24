@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListAlbumsObjetc {
+public class ListAlbumsObject {
 
 	private List<AlbumObject> albums;
 }
