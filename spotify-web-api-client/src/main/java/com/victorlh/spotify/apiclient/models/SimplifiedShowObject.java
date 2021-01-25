@@ -29,6 +29,8 @@ public class SimplifiedShowObject {
 	private String mediaTypes;
 	private String name;
 	private String publisher;
+	@JsonProperty("total_episodes")
+	private Integer totalEpisodes;
 	private String type;
 	private String uri;
 

@@ -22,11 +22,13 @@ public class EpisodeObject {
 	private ExternalUrlObject externalUrls;
 	private String href;
 	private String id;
-	private String images;
+	private List<ImageObject> images;
 	@JsonProperty("is_externally_hosted")
 	private Boolean isExternallyHosted;
 	@JsonProperty("is_playable")
 	private Boolean isPlayable;
+	@Deprecated
+	private String language;
 	private List<String> languages;
 	private String name;
 	@JsonProperty("release_date")
