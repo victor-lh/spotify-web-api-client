@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @Slf4j
 public class AlbumsApiService extends AbstractApiService {
@@ -36,17 +35,8 @@ public class AlbumsApiService extends AbstractApiService {
 		log.trace("Call AlbumsApiService#getMultipleAlbums: {}", multipleAlbumsRequest);
 		assert multipleAlbumsRequest != null;
 
-		List<String> ids = multipleAlbumsRequest.getIds();
-		if (ids == null || ids.isEmpty()) {
-			throw new SpotifyWebApiClientException("Ids list is required");
-		}
-		if (ids.size() > 20) {
-			throw new SpotifyWebApiClientException("Ids list is maximum 20 ids");
-		}
-
-		String idsCollect = String.join(",", ids);
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH);
-		uriBuilder.addParameter("ids", idsCollect);
+		addIdsToUriBuilder(uriBuilder, multipleAlbumsRequest.getIds());
 		addMarketToUriBuilder(uriBuilder, multipleAlbumsRequest.getMarket());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);

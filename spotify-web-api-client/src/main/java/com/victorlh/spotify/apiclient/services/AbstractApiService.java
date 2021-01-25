@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -140,5 +141,16 @@ public class AbstractApiService {
 		if(market != null) {
 			uriBuilder.addParameter("market", market.getAlpha2());
 		}
+	}
+
+	protected void addIdsToUriBuilder(URIBuilder uriBuilder, List<String> ids) {
+		if (ids == null || ids.isEmpty()) {
+			throw new SpotifyWebApiClientException("Ids list is required");
+		}
+		if (ids.size() > 50) {
+			throw new SpotifyWebApiClientException("Ids list is maximum 50 ids");
+		}
+		String idsCollect = String.join(",", ids);
+		uriBuilder.addParameter("ids", idsCollect);
 	}
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.neovisionaries.i18n.CountryCode;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
-import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.models.*;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
@@ -37,18 +36,8 @@ public class ArtistApiService extends AbstractApiService {
 		log.trace("Call ArtistApiService#getMultipleArtists: {}", request);
 		assert request != null;
 
-		List<String> ids = request.getIds();
-
-		if (ids == null || ids.isEmpty()) {
-			throw new SpotifyWebApiClientException("Ids list is required");
-		}
-		if (ids.size() > 50) {
-			throw new SpotifyWebApiClientException("Ids list is maximum 50 ids");
-		}
-
-		String idsCollect = String.join(",", ids);
 		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH);
-		uriBuilder.addParameter("ids", idsCollect);
+		addIdsToUriBuilder(uriBuilder, request.getIds());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
 		return response.parseResponse(ListArtistsObject.class);
