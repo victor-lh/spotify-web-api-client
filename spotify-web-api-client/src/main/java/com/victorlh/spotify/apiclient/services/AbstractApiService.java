@@ -47,7 +47,9 @@ public class AbstractApiService {
 
 	protected URI getUri(URIBuilder uriBuilder) {
 		try {
-			return uriBuilder.build();
+			URI uri = uriBuilder.build();
+			log.debug("Generada URI: {}", uri);
+			return uri;
 		} catch (URISyntaxException e) {
 			log.error(e.getLocalizedMessage(), e);
 			throw new RuntimeException(e);
@@ -123,11 +125,11 @@ public class AbstractApiService {
 	}
 
 	protected void addLimitToUriBuilder(URIBuilder uriBuilder, Integer limit) {
-		addLimitToUriBuilder(uriBuilder,limit, 50);
+		addLimitToUriBuilder(uriBuilder, limit, 50);
 	}
 
 	protected void addLimitToUriBuilder(URIBuilder uriBuilder, Integer limit, Integer max) {
-		if(limit != null) {
+		if (limit != null) {
 			if (limit < 1) {
 				throw new SpotifyWebApiClientException("Limit minimum 1");
 			} else if (limit > 50) {
@@ -138,7 +140,7 @@ public class AbstractApiService {
 	}
 
 	protected void addMarketToUriBuilder(URIBuilder uriBuilder, CountryCode market) {
-		if(market != null) {
+		if (market != null) {
 			uriBuilder.addParameter("market", market.getAlpha2());
 		}
 	}
