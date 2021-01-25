@@ -28,5 +28,8 @@ public class SimplifiedPlaylistObject {
 	private PlaylistTracksRefObject tracks;
 	private String type;
 	private String uri;
+	//TODO - VER que es esto
+	@JsonProperty("primary_color")
+	private Object primaryColor;
 
 }

@@ -12,6 +12,6 @@ import java.util.List;
 public class RecommendationsObject {
 
 	private List<RecommendationSeedObject> seeds;
-	private List<SimplifiedTrackObject> tracks;
+	private List<TrackObject> tracks;
 
 }

@@ -31,9 +31,8 @@ public class TrackObject {
 	private Boolean isLocal;
 	@JsonProperty("is_playable")
 	private Boolean isPlayable;
-	//TODO - Ver que poner aqui
-//	@JsonProperty("linked_from")
-	//private Object linkedFrom;
+	@JsonProperty("linked_from")
+	private LinkedTrackObject linkedFrom;
 	private String name;
 	private Integer popularity;
 	@JsonProperty("preview_url")

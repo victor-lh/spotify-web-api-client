@@ -54,7 +54,7 @@ public class BrowseApiService extends AbstractApiService {
 		addLocaleToUriBuilder(uriBuilder, request.getLocale());
 		Date timestamp = request.getTimestamp();
 		if (timestamp != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			String format = sdf.format(timestamp);
 			uriBuilder = uriBuilder.addParameter("timestamp", format);
 		}

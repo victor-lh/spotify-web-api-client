@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ListSimplifiedPlaylistPagingObject {
 
 	private String message;
-	private PagingObject<SimplifiedAlbumObject> playlists;
+	private PagingObject<SimplifiedPlaylistObject> playlists;
 }
