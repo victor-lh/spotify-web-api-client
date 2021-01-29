@@ -4,7 +4,7 @@ import com.neovisionaries.i18n.CountryCode;
 import com.victorlh.spotify.apiclient.models.EpisodeObject;
 import com.victorlh.spotify.apiclient.models.ListEpisodesObject;
 import com.victorlh.spotify.apiclient.services.episodes.models.EpisodeRequest;
-import com.victorlh.spotify.apiclient.services.episodes.models.ListEpisodesRequest;
+import com.victorlh.spotify.apiclient.services.episodes.models.MultipleEpisodesRequest;
 import com.victorlh.spotify.spotifyapiclienttest.services.EpisodesService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ public class EpisodesController {
 
 	@GetMapping({"", "/"})
 	public ListEpisodesObject getListEpisodes(@RequestParam("ids") List<String> ids, @RequestParam(value = "market", required = false) String market) {
-		ListEpisodesRequest request = ListEpisodesRequest.builder()
+		MultipleEpisodesRequest request = MultipleEpisodesRequest.builder()
 				.ids(ids)
 				.market(market != null ? CountryCode.getByCode(market) : null)
 				.build();

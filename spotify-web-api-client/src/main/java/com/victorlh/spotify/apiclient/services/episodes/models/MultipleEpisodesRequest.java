@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
-public class ListEpisodesRequest {
+public class MultipleEpisodesRequest {
 
 	@Singular
 	private final List<String> ids;

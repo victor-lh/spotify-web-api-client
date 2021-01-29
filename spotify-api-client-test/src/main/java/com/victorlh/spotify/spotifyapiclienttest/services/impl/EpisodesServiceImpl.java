@@ -6,7 +6,7 @@ import com.victorlh.spotify.apiclient.models.EpisodeObject;
 import com.victorlh.spotify.apiclient.models.ListEpisodesObject;
 import com.victorlh.spotify.apiclient.services.episodes.EpisodesApiService;
 import com.victorlh.spotify.apiclient.services.episodes.models.EpisodeRequest;
-import com.victorlh.spotify.apiclient.services.episodes.models.ListEpisodesRequest;
+import com.victorlh.spotify.apiclient.services.episodes.models.MultipleEpisodesRequest;
 import com.victorlh.spotify.spotifyapiclienttest.exceptions.SpotifyApiExceptionRuntime;
 import com.victorlh.spotify.spotifyapiclienttest.services.EpisodesService;
 import com.victorlh.spotify.spotifyapiclienttest.services.SpotifyClientService;
@@ -22,11 +22,11 @@ public class EpisodesServiceImpl implements EpisodesService {
 	}
 
 	@Override
-	public ListEpisodesObject getListEpisodes(ListEpisodesRequest request) {
+	public ListEpisodesObject getListEpisodes(MultipleEpisodesRequest request) {
 		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
 		EpisodesApiService episodesApiService = spotifyApiClient.getEpisodesApiService();
 		try {
-			return episodesApiService.getListEpisodes(request);
+			return episodesApiService.getMultipleEpisodes(request);
 		} catch (SpotifyGeneralApiException e) {
 			throw new SpotifyApiExceptionRuntime(e);
 		}

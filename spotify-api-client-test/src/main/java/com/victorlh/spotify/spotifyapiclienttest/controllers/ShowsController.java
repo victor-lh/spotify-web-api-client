@@ -5,7 +5,7 @@ import com.victorlh.spotify.apiclient.models.ListSimplifiedShowObject;
 import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.ShowObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedEpisodeObject;
-import com.victorlh.spotify.apiclient.services.shows.models.ListShowsRequest;
+import com.victorlh.spotify.apiclient.services.shows.models.MultipleShowsRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowEpisodesRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowRequest;
 import com.victorlh.spotify.spotifyapiclienttest.services.ShowsService;
@@ -28,7 +28,7 @@ public class ShowsController {
 
 	@GetMapping({"", "/"})
 	public ListSimplifiedShowObject getListShows(@RequestParam("ids") List<String> ids, @RequestParam(value = "market", required = false) String market) {
-		ListShowsRequest request = ListShowsRequest.builder().ids(ids).market(market != null ? CountryCode.getByAlpha2Code(market) : null).build();
+		MultipleShowsRequest request = MultipleShowsRequest.builder().ids(ids).market(market != null ? CountryCode.getByAlpha2Code(market) : null).build();
 		return this.showsService.getListShows(request);
 	}
 

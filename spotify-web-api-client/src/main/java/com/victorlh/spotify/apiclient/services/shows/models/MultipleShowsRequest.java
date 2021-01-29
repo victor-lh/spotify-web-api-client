@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
-public class ListShowsRequest {
+public class MultipleShowsRequest {
 
 	@Singular
 	private final List<String> ids;

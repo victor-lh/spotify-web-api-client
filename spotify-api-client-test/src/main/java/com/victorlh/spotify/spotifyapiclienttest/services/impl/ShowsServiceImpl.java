@@ -8,7 +8,7 @@ import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.ShowObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedEpisodeObject;
 import com.victorlh.spotify.apiclient.services.shows.ShowsApiService;
-import com.victorlh.spotify.apiclient.services.shows.models.ListShowsRequest;
+import com.victorlh.spotify.apiclient.services.shows.models.MultipleShowsRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowEpisodesRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowRequest;
 import com.victorlh.spotify.spotifyapiclienttest.services.ShowsService;
@@ -27,11 +27,11 @@ public class ShowsServiceImpl implements ShowsService {
 	}
 
 	@Override
-	public ListSimplifiedShowObject getListShows(ListShowsRequest request) {
+	public ListSimplifiedShowObject getListShows(MultipleShowsRequest request) {
 		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
 		ShowsApiService showsApiService = spotifyApiClient.getShowsApiService();
 		try {
-			return showsApiService.getListShows(request);
+			return showsApiService.getMultipleShows(request);
 		} catch (SpotifyGeneralApiException e) {
 			throw new SpotifyWebApiClientException(e);
 		}

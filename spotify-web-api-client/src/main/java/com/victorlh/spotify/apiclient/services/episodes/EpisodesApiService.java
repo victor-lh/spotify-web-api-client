@@ -7,7 +7,7 @@ import com.victorlh.spotify.apiclient.models.EpisodeObject;
 import com.victorlh.spotify.apiclient.models.ListEpisodesObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
 import com.victorlh.spotify.apiclient.services.episodes.models.EpisodeRequest;
-import com.victorlh.spotify.apiclient.services.episodes.models.ListEpisodesRequest;
+import com.victorlh.spotify.apiclient.services.episodes.models.MultipleEpisodesRequest;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ public class EpisodesApiService extends AbstractApiService {
 		super(spotifyApiClient);
 	}
 
-	public ListEpisodesObject getListEpisodes(ListEpisodesRequest request) throws SpotifyGeneralApiException {
+	public ListEpisodesObject getMultipleEpisodes(MultipleEpisodesRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call EpisodesApiService#getListEpisodes: {}", request);
 		assert request != null;
 

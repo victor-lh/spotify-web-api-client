@@ -9,7 +9,7 @@ import com.victorlh.spotify.apiclient.models.PagingObject;
 import com.victorlh.spotify.apiclient.models.ShowObject;
 import com.victorlh.spotify.apiclient.models.SimplifiedEpisodeObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
-import com.victorlh.spotify.apiclient.services.shows.models.ListShowsRequest;
+import com.victorlh.spotify.apiclient.services.shows.models.MultipleShowsRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowEpisodesRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowRequest;
 import lombok.Builder;
@@ -31,7 +31,7 @@ public class ShowsApiService extends AbstractApiService {
 	}
 
 
-	public ListSimplifiedShowObject getListShows(ListShowsRequest request) throws SpotifyGeneralApiException {
+	public ListSimplifiedShowObject getMultipleShows(MultipleShowsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ShowsApiService#getListShows: {}", request);
 		assert request != null;
 
