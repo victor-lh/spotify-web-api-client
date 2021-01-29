@@ -146,10 +146,14 @@ public class AbstractApiService {
 	}
 
 	protected void addIdsToUriBuilder(URIBuilder uriBuilder, List<String> ids) {
+		addIdsToUriBuilder(uriBuilder, ids, 50);
+	}
+
+	protected void addIdsToUriBuilder(URIBuilder uriBuilder, List<String> ids, int max) {
 		if (ids == null || ids.isEmpty()) {
 			throw new SpotifyWebApiClientException("Ids list is required");
 		}
-		if (ids.size() > 50) {
+		if (ids.size() > max) {
 			throw new SpotifyWebApiClientException("Ids list is maximum 50 ids");
 		}
 		String idsCollect = String.join(",", ids);
