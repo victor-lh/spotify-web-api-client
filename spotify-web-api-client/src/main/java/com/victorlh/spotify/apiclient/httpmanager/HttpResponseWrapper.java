@@ -2,7 +2,7 @@ package com.victorlh.spotify.apiclient.httpmanager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.victorlh.spotify.apiclient.models.PagingObject;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

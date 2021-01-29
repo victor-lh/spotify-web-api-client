@@ -2,7 +2,7 @@ package com.victorlh.spotify.apiclient.exceptions;
 
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.httpmanager.exceptions.SpotifyApiException;
-import com.victorlh.spotify.apiclient.httpmanager.models.AuthErrorObject;
+import com.victorlh.spotify.apiclient.models.errors.AuthErrorObject;
 
 public class SpotifyAuthApiException extends SpotifyApiException {
 

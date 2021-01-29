@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
-import com.victorlh.spotify.apiclient.models.ListSimplifiedShowObject;
-import com.victorlh.spotify.apiclient.models.PagingObject;
-import com.victorlh.spotify.apiclient.models.ShowObject;
-import com.victorlh.spotify.apiclient.models.SimplifiedEpisodeObject;
+import com.victorlh.spotify.apiclient.models.lists.ListSimplifiedShowsObject;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
+import com.victorlh.spotify.apiclient.models.objects.ShowObject;
+import com.victorlh.spotify.apiclient.models.objects.SimplifiedEpisodeObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
 import com.victorlh.spotify.apiclient.services.shows.models.MultipleShowsRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowEpisodesRequest;
@@ -31,7 +31,7 @@ public class ShowsApiService extends AbstractApiService {
 	}
 
 
-	public ListSimplifiedShowObject getMultipleShows(MultipleShowsRequest request) throws SpotifyGeneralApiException {
+	public ListSimplifiedShowsObject getMultipleShows(MultipleShowsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ShowsApiService#getListShows: {}", request);
 		assert request != null;
 
@@ -41,7 +41,7 @@ public class ShowsApiService extends AbstractApiService {
 		URI uri = getUri(uriBuilder);
 
 		HttpResponseWrapper response = doGet(uri);
-		return response.parseResponse(ListSimplifiedShowObject.class);
+		return response.parseResponse(ListSimplifiedShowsObject.class);
 	}
 
 	public ShowObject getShow(ShowRequest request) throws SpotifyGeneralApiException {

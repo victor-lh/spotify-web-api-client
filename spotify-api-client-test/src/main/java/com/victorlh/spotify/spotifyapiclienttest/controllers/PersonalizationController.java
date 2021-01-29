@@ -1,9 +1,9 @@
 package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
 
-import com.victorlh.spotify.apiclient.models.ArtistObject;
-import com.victorlh.spotify.apiclient.models.PagingObject;
-import com.victorlh.spotify.apiclient.models.TrackObject;
+import com.victorlh.spotify.apiclient.models.objects.ArtistObject;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
+import com.victorlh.spotify.apiclient.models.objects.TrackObject;
 import com.victorlh.spotify.apiclient.services.personalization.models.GetUserTopRequest;
 import com.victorlh.spotify.spotifyapiclienttest.services.PersonalizationService;
 import org.apache.commons.lang3.StringUtils;

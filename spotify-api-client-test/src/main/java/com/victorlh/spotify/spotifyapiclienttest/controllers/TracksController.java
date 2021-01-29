@@ -1,10 +1,10 @@
 package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
-import com.victorlh.spotify.apiclient.models.AudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListAudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListTracksObject;
-import com.victorlh.spotify.apiclient.models.TrackObject;
+import com.victorlh.spotify.apiclient.models.objects.AudioFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListAudiosFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListTracksObject;
+import com.victorlh.spotify.apiclient.models.objects.TrackObject;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesMultipleTracksRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesTrackRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.MultipleTracksRequest;
@@ -41,7 +41,7 @@ public class TracksController {
 	}
 
 	@GetMapping({"/audio-features", "/audio-features/"})
-	public ListAudioFeaturesObject getAudioFeaturesMultipleTracks(@RequestParam("ids") List<String> ids) {
+	public ListAudiosFeaturesObject getAudioFeaturesMultipleTracks(@RequestParam("ids") List<String> ids) {
 		AudioFeaturesMultipleTracksRequest request = AudioFeaturesMultipleTracksRequest.builder().ids(ids).build();
 		return this.tracksService.getAudioFeaturesMultipleTracks(request);
 	}

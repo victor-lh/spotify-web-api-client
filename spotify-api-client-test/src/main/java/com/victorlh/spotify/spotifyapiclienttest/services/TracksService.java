@@ -1,9 +1,9 @@
 package com.victorlh.spotify.spotifyapiclienttest.services;
 
-import com.victorlh.spotify.apiclient.models.AudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListAudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListTracksObject;
-import com.victorlh.spotify.apiclient.models.TrackObject;
+import com.victorlh.spotify.apiclient.models.objects.AudioFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListAudiosFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListTracksObject;
+import com.victorlh.spotify.apiclient.models.objects.TrackObject;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesMultipleTracksRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesTrackRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.MultipleTracksRequest;
@@ -15,7 +15,7 @@ public interface TracksService {
 
 	TrackObject getTrack(TrackRequest request);
 
-	ListAudioFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request);
+	ListAudiosFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request);
 
 	AudioFeaturesObject getAudioFeaturesTrack(AudioFeaturesTrackRequest request);
 }

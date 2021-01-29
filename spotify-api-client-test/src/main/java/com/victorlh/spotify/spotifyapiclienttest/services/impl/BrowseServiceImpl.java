@@ -2,7 +2,12 @@ package com.victorlh.spotify.spotifyapiclienttest.services.impl;
 
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
-import com.victorlh.spotify.apiclient.models.*;
+import com.victorlh.spotify.apiclient.models.lists.ListGenresObject;
+import com.victorlh.spotify.apiclient.models.objects.CategoryObject;
+import com.victorlh.spotify.apiclient.models.objects.RecommendationsObject;
+import com.victorlh.spotify.apiclient.models.pagination.ListCategoriesPagingObject;
+import com.victorlh.spotify.apiclient.models.pagination.ListSimplifiedAlbumsPagingObject;
+import com.victorlh.spotify.apiclient.models.pagination.ListSimplifiedPlaylistPagingObject;
 import com.victorlh.spotify.apiclient.services.browse.BrowseApiService;
 import com.victorlh.spotify.apiclient.services.browse.models.*;
 import com.victorlh.spotify.spotifyapiclienttest.exceptions.SpotifyApiExceptionRuntime;

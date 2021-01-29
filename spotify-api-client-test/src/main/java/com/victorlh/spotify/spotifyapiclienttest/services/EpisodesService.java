@@ -1,7 +1,7 @@
 package com.victorlh.spotify.spotifyapiclienttest.services;
 
-import com.victorlh.spotify.apiclient.models.EpisodeObject;
-import com.victorlh.spotify.apiclient.models.ListEpisodesObject;
+import com.victorlh.spotify.apiclient.models.objects.EpisodeObject;
+import com.victorlh.spotify.apiclient.models.lists.ListEpisodesObject;
 import com.victorlh.spotify.apiclient.services.episodes.models.EpisodeRequest;
 import com.victorlh.spotify.apiclient.services.episodes.models.MultipleEpisodesRequest;
 

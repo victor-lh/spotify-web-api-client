@@ -1,7 +1,11 @@
 package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
-import com.victorlh.spotify.apiclient.models.*;
+import com.victorlh.spotify.apiclient.models.lists.ListArtistsObject;
+import com.victorlh.spotify.apiclient.models.lists.ListTracksObject;
+import com.victorlh.spotify.apiclient.models.objects.ArtistObject;
+import com.victorlh.spotify.apiclient.models.objects.SimplifiedAlbumObject;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
 import com.victorlh.spotify.apiclient.services.artists.models.ArtistAlbumsRequest;
 import com.victorlh.spotify.apiclient.services.artists.models.ArtistTopTracksRequest;
 import com.victorlh.spotify.apiclient.services.artists.models.MultipleArtistsRequest;

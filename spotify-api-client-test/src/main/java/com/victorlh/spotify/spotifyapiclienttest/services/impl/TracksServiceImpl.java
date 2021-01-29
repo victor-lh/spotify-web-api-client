@@ -3,10 +3,10 @@ package com.victorlh.spotify.spotifyapiclienttest.services.impl;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
-import com.victorlh.spotify.apiclient.models.AudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListAudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListTracksObject;
-import com.victorlh.spotify.apiclient.models.TrackObject;
+import com.victorlh.spotify.apiclient.models.objects.AudioFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListAudiosFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListTracksObject;
+import com.victorlh.spotify.apiclient.models.objects.TrackObject;
 import com.victorlh.spotify.apiclient.services.tracks.TracksApiService;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesMultipleTracksRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesTrackRequest;
@@ -50,7 +50,7 @@ public class TracksServiceImpl implements TracksService {
 	}
 
 	@Override
-	public ListAudioFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request) {
+	public ListAudiosFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request) {
 		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
 		TracksApiService tracksApiService = spotifyApiClient.getTracksApiService();
 		try {

@@ -1,7 +1,12 @@
 package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
-import com.victorlh.spotify.apiclient.models.*;
+import com.victorlh.spotify.apiclient.models.lists.ListGenresObject;
+import com.victorlh.spotify.apiclient.models.objects.CategoryObject;
+import com.victorlh.spotify.apiclient.models.objects.RecommendationsObject;
+import com.victorlh.spotify.apiclient.models.pagination.ListCategoriesPagingObject;
+import com.victorlh.spotify.apiclient.models.pagination.ListSimplifiedAlbumsPagingObject;
+import com.victorlh.spotify.apiclient.models.pagination.ListSimplifiedPlaylistPagingObject;
 import com.victorlh.spotify.apiclient.services.browse.models.*;
 import com.victorlh.spotify.spotifyapiclienttest.services.BrowseService;
 import org.apache.commons.lang3.StringUtils;

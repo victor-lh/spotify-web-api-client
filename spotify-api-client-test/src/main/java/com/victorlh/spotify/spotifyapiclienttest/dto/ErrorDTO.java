@@ -1,6 +1,5 @@
 package com.victorlh.spotify.spotifyapiclienttest.dto;
 
-import com.victorlh.spotify.apiclient.httpmanager.models.AuthErrorObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

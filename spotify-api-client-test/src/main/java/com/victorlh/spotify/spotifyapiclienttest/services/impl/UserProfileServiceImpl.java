@@ -2,8 +2,8 @@ package com.victorlh.spotify.spotifyapiclienttest.services.impl;
 
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
-import com.victorlh.spotify.apiclient.models.PrivateUserObject;
-import com.victorlh.spotify.apiclient.models.PublicUserObject;
+import com.victorlh.spotify.apiclient.models.objects.PrivateUserObject;
+import com.victorlh.spotify.apiclient.models.objects.PublicUserObject;
 import com.victorlh.spotify.apiclient.services.userprofile.UserProfileApiService;
 import com.victorlh.spotify.spotifyapiclienttest.exceptions.SpotifyApiExceptionRuntime;
 import com.victorlh.spotify.spotifyapiclienttest.services.SpotifyClientService;

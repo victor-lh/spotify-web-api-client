@@ -1,7 +1,7 @@
 package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
-import com.victorlh.spotify.apiclient.models.PrivateUserObject;
-import com.victorlh.spotify.apiclient.models.PublicUserObject;
+import com.victorlh.spotify.apiclient.models.objects.PrivateUserObject;
+import com.victorlh.spotify.apiclient.models.objects.PublicUserObject;
 import com.victorlh.spotify.spotifyapiclienttest.services.UserProfileService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

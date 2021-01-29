@@ -3,10 +3,10 @@ package com.victorlh.spotify.apiclient.services.tracks;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
-import com.victorlh.spotify.apiclient.models.AudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListAudioFeaturesObject;
-import com.victorlh.spotify.apiclient.models.ListTracksObject;
-import com.victorlh.spotify.apiclient.models.TrackObject;
+import com.victorlh.spotify.apiclient.models.objects.AudioFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListAudiosFeaturesObject;
+import com.victorlh.spotify.apiclient.models.lists.ListTracksObject;
+import com.victorlh.spotify.apiclient.models.objects.TrackObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesMultipleTracksRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesTrackRequest;
@@ -58,7 +58,7 @@ public class TracksApiService extends AbstractApiService {
 		return response.parseResponse(TrackObject.class);
 	}
 
-	public ListAudioFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request) throws SpotifyGeneralApiException {
+	public ListAudiosFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call TracksApiService#getAudioFeaturesMultipleTracks: {}", request);
 		assert request != null;
 
@@ -67,7 +67,7 @@ public class TracksApiService extends AbstractApiService {
 		URI uri = getUri(uriBuilder);
 
 		HttpResponseWrapper response = doGet(uri);
-		return response.parseResponse(ListAudioFeaturesObject.class);
+		return response.parseResponse(ListAudiosFeaturesObject.class);
 	}
 
 	public AudioFeaturesObject getAudioFeaturesTrack(AudioFeaturesTrackRequest request) throws SpotifyGeneralApiException {

@@ -1,9 +1,9 @@
 package com.victorlh.spotify.spotifyapiclienttest.services;
 
-import com.victorlh.spotify.apiclient.models.AlbumObject;
-import com.victorlh.spotify.apiclient.models.ListAlbumsObject;
-import com.victorlh.spotify.apiclient.models.PagingObject;
-import com.victorlh.spotify.apiclient.models.SimplifiedTrackObject;
+import com.victorlh.spotify.apiclient.models.objects.AlbumObject;
+import com.victorlh.spotify.apiclient.models.lists.ListAlbumsObject;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
+import com.victorlh.spotify.apiclient.models.objects.SimplifiedTrackObject;
 import com.victorlh.spotify.apiclient.services.albums.models.AlbumRequest;
 import com.victorlh.spotify.apiclient.services.albums.models.AlbumTracksRequest;
 import com.victorlh.spotify.apiclient.services.albums.models.MultipleAlbumsRequest;

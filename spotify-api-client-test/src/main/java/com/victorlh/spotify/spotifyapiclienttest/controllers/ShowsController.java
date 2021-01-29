@@ -1,10 +1,10 @@
 package com.victorlh.spotify.spotifyapiclienttest.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
-import com.victorlh.spotify.apiclient.models.ListSimplifiedShowObject;
-import com.victorlh.spotify.apiclient.models.PagingObject;
-import com.victorlh.spotify.apiclient.models.ShowObject;
-import com.victorlh.spotify.apiclient.models.SimplifiedEpisodeObject;
+import com.victorlh.spotify.apiclient.models.lists.ListSimplifiedShowsObject;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
+import com.victorlh.spotify.apiclient.models.objects.ShowObject;
+import com.victorlh.spotify.apiclient.models.objects.SimplifiedEpisodeObject;
 import com.victorlh.spotify.apiclient.services.shows.models.MultipleShowsRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowEpisodesRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowRequest;
@@ -27,7 +27,7 @@ public class ShowsController {
 	}
 
 	@GetMapping({"", "/"})
-	public ListSimplifiedShowObject getListShows(@RequestParam("ids") List<String> ids, @RequestParam(value = "market", required = false) String market) {
+	public ListSimplifiedShowsObject getListShows(@RequestParam("ids") List<String> ids, @RequestParam(value = "market", required = false) String market) {
 		MultipleShowsRequest request = MultipleShowsRequest.builder().ids(ids).market(market != null ? CountryCode.getByAlpha2Code(market) : null).build();
 		return this.showsService.getListShows(request);
 	}
