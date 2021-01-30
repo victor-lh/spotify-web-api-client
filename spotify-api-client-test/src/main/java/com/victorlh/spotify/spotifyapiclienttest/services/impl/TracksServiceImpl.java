@@ -12,6 +12,7 @@ import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesMultip
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesTrackRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.MultipleTracksRequest;
 import com.victorlh.spotify.apiclient.services.tracks.models.TrackRequest;
+import com.victorlh.spotify.spotifyapiclienttest.exceptions.SpotifyApiExceptionRuntime;
 import com.victorlh.spotify.spotifyapiclienttest.services.SpotifyClientService;
 import com.victorlh.spotify.spotifyapiclienttest.services.TracksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class TracksServiceImpl implements TracksService {
 		try {
 			return tracksApiService.getMultipleTracks(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 
@@ -45,7 +46,7 @@ public class TracksServiceImpl implements TracksService {
 		try {
 			return tracksApiService.getTrack(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 
@@ -56,7 +57,7 @@ public class TracksServiceImpl implements TracksService {
 		try {
 			return tracksApiService.getAudioFeaturesMultipleTracks(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 
@@ -67,7 +68,7 @@ public class TracksServiceImpl implements TracksService {
 		try {
 			return tracksApiService.getAudioFeaturesTrack(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 }

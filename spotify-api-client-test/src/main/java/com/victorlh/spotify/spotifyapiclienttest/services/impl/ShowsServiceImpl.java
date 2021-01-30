@@ -11,6 +11,7 @@ import com.victorlh.spotify.apiclient.services.shows.ShowsApiService;
 import com.victorlh.spotify.apiclient.services.shows.models.MultipleShowsRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowEpisodesRequest;
 import com.victorlh.spotify.apiclient.services.shows.models.ShowRequest;
+import com.victorlh.spotify.spotifyapiclienttest.exceptions.SpotifyApiExceptionRuntime;
 import com.victorlh.spotify.spotifyapiclienttest.services.ShowsService;
 import com.victorlh.spotify.spotifyapiclienttest.services.SpotifyClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ShowsServiceImpl implements ShowsService {
 		try {
 			return showsApiService.getMultipleShows(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 
@@ -44,7 +45,7 @@ public class ShowsServiceImpl implements ShowsService {
 		try {
 			return showsApiService.getShow(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 
@@ -55,7 +56,7 @@ public class ShowsServiceImpl implements ShowsService {
 		try {
 			return showsApiService.getShowEpisodes(request);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 
@@ -66,7 +67,7 @@ public class ShowsServiceImpl implements ShowsService {
 		try {
 			return showsApiService.getShowEpisodes(paginationUrl);
 		} catch (SpotifyGeneralApiException e) {
-			throw new SpotifyWebApiClientException(e);
+			throw new SpotifyApiExceptionRuntime(e);
 		}
 	}
 }
