@@ -39,7 +39,9 @@ public class BrowseApiService extends AbstractApiService {
 
 	public ListSimplifiedAlbumsPagingObject getNewReleases(NewReleasesRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call BrowseApiService#getNewReleases: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(BROWSE_PATH, NEW_RELEASES_PATH);
 		addLimitToUriBuilder(uriBuilder, request.getLimit());
@@ -51,7 +53,9 @@ public class BrowseApiService extends AbstractApiService {
 
 	public ListSimplifiedPlaylistPagingObject getAllFeaturedPlaylists(FeaturedPlaylistsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call BrowseApiService#getAllFeaturedPlaylists: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(BROWSE_PATH, ALL_FEATURED_PLAYLISTS_PATH);
 		addLimitToUriBuilder(uriBuilder, request.getLimit());
@@ -71,7 +75,9 @@ public class BrowseApiService extends AbstractApiService {
 
 	public ListCategoriesPagingObject getAllCategories(AllCategoriesRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call BrowseApiService#getAllCategories: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(BROWSE_PATH, CATEGORIES_PATH);
 		addLimitToUriBuilder(uriBuilder, request.getLimit());
@@ -85,10 +91,14 @@ public class BrowseApiService extends AbstractApiService {
 
 	public CategoryObject getCategory(CategoryRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call BrowseApiService#getCategory: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		String categoryId = request.getCategoryId();
-		assert StringUtils.isNotEmpty(categoryId);
+		if (StringUtils.isEmpty(categoryId)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(BROWSE_PATH, CATEGORIES_PATH, categoryId);
 		addCountryToUriBuilder(uriBuilder, request.getCountry());
@@ -101,10 +111,14 @@ public class BrowseApiService extends AbstractApiService {
 
 	public ListSimplifiedPlaylistPagingObject getCategoryPlaylists(CategoryPlaylistsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call BrowseApiService#getCategoryPlaylists: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		String categoryId = request.getCategoryId();
-		assert StringUtils.isNotEmpty(categoryId);
+		if (StringUtils.isEmpty(categoryId)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(BROWSE_PATH, CATEGORIES_PATH, categoryId, PLAYLISTS_PATH);
 		addCountryToUriBuilder(uriBuilder, request.getCountry());
@@ -117,7 +131,9 @@ public class BrowseApiService extends AbstractApiService {
 
 	public RecommendationsObject getRecommendations(RecommendationsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call BrowseApiService#getRecommendations: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(RECOMMENDATIONS_PATH);
 		uriBuilder.addParameters(request.getParams());

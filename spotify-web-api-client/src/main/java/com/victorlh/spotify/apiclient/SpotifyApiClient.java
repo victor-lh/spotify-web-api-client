@@ -9,6 +9,7 @@ import com.victorlh.spotify.apiclient.services.artists.ArtistApiService;
 import com.victorlh.spotify.apiclient.services.browse.BrowseApiService;
 import com.victorlh.spotify.apiclient.services.credentials.CredentialsApiService;
 import com.victorlh.spotify.apiclient.services.episodes.EpisodesApiService;
+import com.victorlh.spotify.apiclient.services.follow.FollowApiService;
 import com.victorlh.spotify.apiclient.services.personalization.PersonalizationApiService;
 import com.victorlh.spotify.apiclient.services.shows.ShowsApiService;
 import com.victorlh.spotify.apiclient.services.tracks.TracksApiService;
@@ -70,5 +71,9 @@ public class SpotifyApiClient {
 
 	public TracksApiService getTracksApiService() {
 		return TracksApiService.builder().spotifyApiClient(this).build();
+	}
+
+	public FollowApiService getFollowApiService() {
+		return FollowApiService.builder().spotifyApiClient(this).build();
 	}
 }

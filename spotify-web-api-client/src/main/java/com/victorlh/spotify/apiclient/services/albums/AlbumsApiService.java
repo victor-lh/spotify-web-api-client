@@ -31,50 +31,52 @@ public class AlbumsApiService extends AbstractApiService {
 		super(spotifyApiClient);
 	}
 
-	public ListAlbumsObject getMultipleAlbums(MultipleAlbumsRequest multipleAlbumsRequest) throws SpotifyGeneralApiException {
-		log.trace("Call AlbumsApiService#getMultipleAlbums: {}", multipleAlbumsRequest);
-		assert multipleAlbumsRequest != null;
+	public ListAlbumsObject getMultipleAlbums(MultipleAlbumsRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call AlbumsApiService#getMultipleAlbums: {}", request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH);
-		addIdsToUriBuilder(uriBuilder, multipleAlbumsRequest.getIds());
-		addMarketToUriBuilder(uriBuilder, multipleAlbumsRequest.getMarket());
+		addIdsToUriBuilder(uriBuilder, request.getIds());
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
 		return response.parseResponse(ListAlbumsObject.class);
 	}
 
-	public AlbumObject getAlbum(AlbumRequest albumRequest) throws SpotifyGeneralApiException {
-		log.trace("Call AlbumsApiService#getAlbum: {}", albumRequest);
-		if (albumRequest == null) {
+	public AlbumObject getAlbum(AlbumRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call AlbumsApiService#getAlbum: {}", request);
+		if (request == null) {
 			throw new IllegalArgumentException();
 		}
 
-		String albumId = albumRequest.getAlbumId();
+		String albumId = request.getAlbumId();
 		if (StringUtils.isEmpty(albumId)) {
 			throw new SpotifyWebApiClientException("AlbumId is required");
 		}
 
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH, albumId);
-		addMarketToUriBuilder(uriBuilder, albumRequest.getMarket());
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);
 		return response.parseResponse(AlbumObject.class);
 	}
 
-	public PagingObject<SimplifiedTrackObject> getAlbumTracks(AlbumTracksRequest albumTracksRequest) throws SpotifyGeneralApiException {
-		log.trace("Call AlbumsApiService#getAlbumTracks: {}", albumTracksRequest);
-		if (albumTracksRequest == null) {
+	public PagingObject<SimplifiedTrackObject> getAlbumTracks(AlbumTracksRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call AlbumsApiService#getAlbumTracks: {}", request);
+		if (request == null) {
 			throw new IllegalArgumentException();
 		}
 
-		String albumId = albumTracksRequest.getAlbumId();
+		String albumId = request.getAlbumId();
 		if (StringUtils.isEmpty(albumId)) {
 			throw new SpotifyWebApiClientException("AlbumId is required");
 		}
 
 		URIBuilder uriBuilder = getUriBuilder(ALBUMS_PATH, albumId, TRACKS_PATH);
-		addLimitToUriBuilder(uriBuilder, albumTracksRequest.getLimit());
-		addMarketToUriBuilder(uriBuilder, albumTracksRequest.getMarket());
+		addLimitToUriBuilder(uriBuilder, request.getLimit());
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
 
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doGet(uri);

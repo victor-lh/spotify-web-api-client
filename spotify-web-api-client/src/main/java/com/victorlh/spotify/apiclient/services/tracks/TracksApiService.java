@@ -3,9 +3,9 @@ package com.victorlh.spotify.apiclient.services.tracks;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
-import com.victorlh.spotify.apiclient.models.objects.AudioFeaturesObject;
 import com.victorlh.spotify.apiclient.models.lists.ListAudiosFeaturesObject;
 import com.victorlh.spotify.apiclient.models.lists.ListTracksObject;
+import com.victorlh.spotify.apiclient.models.objects.AudioFeaturesObject;
 import com.victorlh.spotify.apiclient.models.objects.TrackObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
 import com.victorlh.spotify.apiclient.services.tracks.models.AudioFeaturesMultipleTracksRequest;
@@ -33,7 +33,9 @@ public class TracksApiService extends AbstractApiService {
 
 	public ListTracksObject getMultipleTracks(MultipleTracksRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call TracksApiService#getMultipleTracks: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(TRACKS_PATH);
 		addIdsToUriBuilder(uriBuilder, request.getIds());
@@ -46,9 +48,13 @@ public class TracksApiService extends AbstractApiService {
 
 	public TrackObject getTrack(TrackRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call TracksApiService#getTrack: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 		String id = request.getId();
-		assert StringUtils.isNotEmpty(id);
+		if (StringUtils.isEmpty(id)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(TRACKS_PATH, id);
 		addMarketToUriBuilder(uriBuilder, request.getMarket());
@@ -60,7 +66,9 @@ public class TracksApiService extends AbstractApiService {
 
 	public ListAudiosFeaturesObject getAudioFeaturesMultipleTracks(AudioFeaturesMultipleTracksRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call TracksApiService#getAudioFeaturesMultipleTracks: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(AUDIO_FEATURES_PATH);
 		addIdsToUriBuilder(uriBuilder, request.getIds(), 100);
@@ -72,9 +80,13 @@ public class TracksApiService extends AbstractApiService {
 
 	public AudioFeaturesObject getAudioFeaturesTrack(AudioFeaturesTrackRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call TracksApiService#getAudioFeaturesTrack: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 		String id = request.getId();
-		assert StringUtils.isNotEmpty(id);
+		if (StringUtils.isEmpty(id)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = getUri(AUDIO_FEATURES_PATH, id);
 
@@ -85,7 +97,9 @@ public class TracksApiService extends AbstractApiService {
 	private Object getAudioAnalysisTrack(String id) throws SpotifyGeneralApiException {
 		//TODO - Implementar model de respuesta
 		log.trace("Call TracksApiService#getAudioAnalysisTrack: {}", id);
-		assert StringUtils.isNotEmpty(id);
+		if (StringUtils.isEmpty(id)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = getUri(AUDIO_ANALYSIS_PATH, id);
 		HttpResponseWrapper response = doGet(uri);

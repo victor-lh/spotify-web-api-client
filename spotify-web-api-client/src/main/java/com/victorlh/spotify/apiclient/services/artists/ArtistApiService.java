@@ -38,7 +38,9 @@ public class ArtistApiService extends AbstractApiService {
 
 	public ListArtistsObject getMultipleArtists(MultipleArtistsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ArtistApiService#getMultipleArtists: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH);
 		addIdsToUriBuilder(uriBuilder, request.getIds());
@@ -49,7 +51,9 @@ public class ArtistApiService extends AbstractApiService {
 
 	public ArtistObject getArtist(String artisId) throws SpotifyGeneralApiException {
 		log.trace("Call ArtistApiService#getArtist: {}", artisId);
-		assert StringUtils.isNotEmpty(artisId);
+		if (StringUtils.isEmpty(artisId)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = getUri(ARTISTS_PATH, artisId);
 		HttpResponseWrapper response = doGet(uri);
@@ -58,13 +62,19 @@ public class ArtistApiService extends AbstractApiService {
 
 	public ListTracksObject getArtistTopTracks(ArtistTopTracksRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ArtistApiService#getArtistTopTracks: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		String artistId = request.getArtistId();
-		assert StringUtils.isNotEmpty(artistId);
+		if (StringUtils.isEmpty(artistId)) {
+			throw new IllegalArgumentException();
+		}
 
 		CountryCode market = request.getMarket();
-		assert market != null;
+		if(market == null) {
+			throw new IllegalArgumentException();
+		}
 		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH, artistId, TOP_TRACKS_PATH);
 		uriBuilder = uriBuilder.addParameter("market", market.getAlpha2());
 		URI uri = getUri(uriBuilder);
@@ -74,7 +84,9 @@ public class ArtistApiService extends AbstractApiService {
 
 	public ListArtistsObject getRelatedArtists(String artistId) throws SpotifyGeneralApiException {
 		log.trace("Call ArtistApiService#getRelatedArtists: {}", artistId);
-		assert StringUtils.isNotEmpty(artistId);
+		if (StringUtils.isEmpty(artistId)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = getUri(ARTISTS_PATH, artistId, RELATED_ARTISTS_PATH);
 		HttpResponseWrapper response = doGet(uri);
@@ -83,10 +95,14 @@ public class ArtistApiService extends AbstractApiService {
 
 	public PagingObject<SimplifiedAlbumObject> getAlbums(ArtistAlbumsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ArtistApiService#getAlbums: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		String artistId = request.getArtistId();
-		assert StringUtils.isNotEmpty(artistId);
+		if (StringUtils.isEmpty(artistId)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(ARTISTS_PATH, artistId, ALBUMS_PATH);
 		addLimitToUriBuilder(uriBuilder, request.getLimit());
@@ -105,7 +121,9 @@ public class ArtistApiService extends AbstractApiService {
 
 	public PagingObject<SimplifiedAlbumObject> getAlbums(String paginationUrl) throws SpotifyGeneralApiException {
 		log.trace("Call ArtistApiService#getAlbums: {}", paginationUrl);
-		assert StringUtils.isNotEmpty(paginationUrl);
+		if (StringUtils.isEmpty(paginationUrl)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = URI.create(paginationUrl);
 		HttpResponseWrapper response = doGet(uri);

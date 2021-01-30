@@ -33,7 +33,9 @@ public class ShowsApiService extends AbstractApiService {
 
 	public ListSimplifiedShowsObject getMultipleShows(MultipleShowsRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ShowsApiService#getListShows: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(SHOWS_PATH);
 		addIdsToUriBuilder(uriBuilder, request.getIds());
@@ -46,9 +48,13 @@ public class ShowsApiService extends AbstractApiService {
 
 	public ShowObject getShow(ShowRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ShowsApiService#getShow: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 		String id = request.getId();
-		assert StringUtils.isNotEmpty(id);
+		if (StringUtils.isEmpty(id)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(SHOWS_PATH, id);
 		addMarketToUriBuilder(uriBuilder, request.getMarket());
@@ -60,9 +66,13 @@ public class ShowsApiService extends AbstractApiService {
 
 	public PagingObject<SimplifiedEpisodeObject> getShowEpisodes(ShowEpisodesRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call ShowsApiService#getShowEpisodes: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 		String id = request.getId();
-		assert StringUtils.isNotEmpty(id);
+		if (StringUtils.isEmpty(id)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(SHOWS_PATH, id, EPISODES_PATH);
 		addMarketToUriBuilder(uriBuilder, request.getMarket());
@@ -76,7 +86,9 @@ public class ShowsApiService extends AbstractApiService {
 
 	public PagingObject<SimplifiedEpisodeObject> getShowEpisodes(String paginationUrl) throws SpotifyGeneralApiException {
 		log.trace("Call ShowsApiService#getShowEpisodes: {}", paginationUrl);
-		assert StringUtils.isNotEmpty(paginationUrl);
+		if (StringUtils.isEmpty(paginationUrl)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = URI.create(paginationUrl);
 

@@ -27,7 +27,9 @@ public class EpisodesApiService extends AbstractApiService {
 
 	public ListEpisodesObject getMultipleEpisodes(MultipleEpisodesRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call EpisodesApiService#getListEpisodes: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(EPISODES_PATH);
 		addMarketToUriBuilder(uriBuilder, request.getMarket());
@@ -39,9 +41,13 @@ public class EpisodesApiService extends AbstractApiService {
 
 	public EpisodeObject getEpisode(EpisodeRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call EpisodesApiService#getEpisode: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 		String id = request.getId();
-		assert StringUtils.isNotEmpty(id);
+		if (StringUtils.isEmpty(id)) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(EPISODES_PATH, id);
 		addMarketToUriBuilder(uriBuilder, request.getMarket());

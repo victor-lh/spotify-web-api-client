@@ -73,8 +73,11 @@ public class HttpResponseWrapper {
 			if (data == null) {
 				try {
 					InputStream bodyIS = getBodyIS();
-					assert bodyIS != null;
-					data = IOUtils.toByteArray(bodyIS);
+					if (bodyIS == null) {
+						data = new byte[0];
+					} else {
+						data = IOUtils.toByteArray(bodyIS);
+					}
 				} catch (IOException e) {
 					log.error(e.getLocalizedMessage(), e);
 					throw new RuntimeException(e);
@@ -84,9 +87,10 @@ public class HttpResponseWrapper {
 		}
 
 		private InputStream getBodyIS() throws IOException {
-			assert entity != null;
-			assert entity.getContentLength() > 0;
-			return entity.getContent();
+			if (entity != null) {
+				return entity.getContent();
+			}
+			return null;
 		}
 	}
 }

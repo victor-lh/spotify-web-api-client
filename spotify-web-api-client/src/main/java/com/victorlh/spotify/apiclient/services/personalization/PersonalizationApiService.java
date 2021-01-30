@@ -31,7 +31,9 @@ public class PersonalizationApiService extends AbstractApiService {
 
 	public PagingObject<TrackObject> getUserTopTracks(GetUserTopRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call PersonalizationApiService#getUserTopTracks: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = getURI(TRACKS_PATH, request);
 		HttpResponseWrapper response = doGet(uri);
@@ -42,7 +44,9 @@ public class PersonalizationApiService extends AbstractApiService {
 
 	public PagingObject<TrackObject> getUserTopTracks(String paginationUri) throws SpotifyGeneralApiException {
 		log.trace("Call PersonalizationApiService#getUserTopTracks: {}", paginationUri);
-		assert paginationUri != null;
+		if(StringUtils.isEmpty(paginationUri)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = URI.create(paginationUri);
 		HttpResponseWrapper response = doGet(uri);
@@ -53,7 +57,9 @@ public class PersonalizationApiService extends AbstractApiService {
 
 	public PagingObject<ArtistObject> getUserTopArtist(GetUserTopRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call PersonalizationApiService#getUserTopArtist: {}", request);
-		assert request != null;
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = getURI(ARTIS_PATH, request);
 		HttpResponseWrapper response = doGet(uri);
@@ -64,7 +70,9 @@ public class PersonalizationApiService extends AbstractApiService {
 
 	public PagingObject<ArtistObject> getUserTopArtist(String paginationUri) throws SpotifyGeneralApiException {
 		log.trace("Call PersonalizationApiService#getUserTopArtist: {}", paginationUri);
-		assert paginationUri != null;
+		if (StringUtils.isEmpty(paginationUri)) {
+			throw new IllegalArgumentException();
+		}
 
 		URI uri = URI.create(paginationUri);
 		HttpResponseWrapper response = doGet(uri);
