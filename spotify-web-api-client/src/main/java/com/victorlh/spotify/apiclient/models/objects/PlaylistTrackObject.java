@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.victorlh.spotify.apiclient.models.IPlayableItem;
-import com.victorlh.spotify.apiclient.models.deserializer.PlaylistTrackObjectDeserializer;
+import com.victorlh.spotify.apiclient.models.deserializer.PlayableItemDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonDeserialize(using = PlaylistTrackObjectDeserializer.class)
 public class PlaylistTrackObject {
 
 	@JsonProperty("added_at")
@@ -25,7 +24,7 @@ public class PlaylistTrackObject {
 	private PublicUserObject addedBy;
 	@JsonProperty(value = "is_local")
 	private Boolean isLocal;
-	@JsonIgnore()
+	@JsonDeserialize(using = PlayableItemDeserializer.class)
 	private IPlayableItem track;
 
 
