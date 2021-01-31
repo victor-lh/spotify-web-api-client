@@ -5,7 +5,7 @@
 
     <groupId>com.victorlh.spotify</groupId>
     <artifactId>spotify-web-api-client</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <name>Spotify Web API Client</name>
     <description>Java client for the Spotify Web API.</description>
