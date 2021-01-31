@@ -14,6 +14,7 @@ import com.victorlh.spotify.apiclient.services.library.LibraryApiService;
 import com.victorlh.spotify.apiclient.services.personalization.PersonalizationApiService;
 import com.victorlh.spotify.apiclient.services.player.PlayerApiService;
 import com.victorlh.spotify.apiclient.services.playlist.PlaylistApiService;
+import com.victorlh.spotify.apiclient.services.search.SearchApiService;
 import com.victorlh.spotify.apiclient.services.shows.ShowsApiService;
 import com.victorlh.spotify.apiclient.services.tracks.TracksApiService;
 import com.victorlh.spotify.apiclient.services.userprofile.UserProfileApiService;
@@ -90,5 +91,9 @@ public class SpotifyApiClient {
 
 	public PlaylistApiService getPlaylistApiService() {
 		return PlaylistApiService.builder().spotifyApiClient(this).build();
+	}
+
+	public SearchApiService getSearchApiService() {
+		return SearchApiService.builder().spotifyApiClient(this).build();
 	}
 }
