@@ -8,10 +8,7 @@ import com.victorlh.spotify.apiclient.models.lists.ListDevicesObject;
 import com.victorlh.spotify.apiclient.models.objects.CurrentlyPlayingContextObject;
 import com.victorlh.spotify.apiclient.models.objects.CurrentlyPlayingObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
-import com.victorlh.spotify.apiclient.services.player.models.GetCurrentlyPlayingTrackRequest;
-import com.victorlh.spotify.apiclient.services.player.models.GetPlaybackInformationRequest;
-import com.victorlh.spotify.apiclient.services.player.models.PlayPlaybackRequest;
-import com.victorlh.spotify.apiclient.services.player.models.TransferPlaybackRequest;
+import com.victorlh.spotify.apiclient.services.player.models.*;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +29,7 @@ public class PlayerApiService extends AbstractApiService {
 	private static final String PAUSE_PATH = "pause";
 	private static final String NEXT_PATH = "next";
 	private static final String PREVIOUS_PATH = "previous";
+	private static final String SEEK_PATH = "seek";
 
 	@Builder
 	public PlayerApiService(SpotifyApiClient spotifyApiClient) {
@@ -137,6 +135,24 @@ public class PlayerApiService extends AbstractApiService {
 		}
 		URI uri = getUri(uriBuilder);
 		doPost(uri, null);
+	}
+
+	public void seekToPositionCurrentlyPlayingTrack(SeekPositionCurrentlyPlayingTrackRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlayerApiService#seekToPositionCurrentlyPlayingTrack: {}", request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+
+		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH, SEEK_PATH);
+		Long positionMs = request.getPositionMs();
+		positionMs = positionMs != null ? positionMs : 0L;
+		uriBuilder.addParameter("position_ms", Long.toString(positionMs));
+		String deviceId = request.getDeviceId();
+		if (StringUtils.isNotEmpty(deviceId)) {
+			uriBuilder.addParameter("device_id", deviceId);
+		}
+		URI uri = getUri(uriBuilder);
+		doPut(uri, null);
 	}
 
 	private void addAdditionalTypes(URIBuilder uriBuilder, List<PlayableType> additionalTypes) {
