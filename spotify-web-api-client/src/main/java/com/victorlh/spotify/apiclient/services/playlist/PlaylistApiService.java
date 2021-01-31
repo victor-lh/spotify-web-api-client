@@ -15,6 +15,7 @@ import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class PlaylistApiService extends AbstractApiService {
@@ -207,6 +208,24 @@ public class PlaylistApiService extends AbstractApiService {
 
 		URI uri = getUri(PLAYLISTS_PATH, playlistId, TRACKS_PATH);
 		HttpResponseWrapper response = doDelete(uri, request);
+		return response.parseResponse(PlaylistSnapshotObject.class);
+	}
+
+	public PlaylistSnapshotObject reorderReplaceItemsPlaylist(String playlistId, ReorderReplaceItemsPlaylistRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#reorderReplaceItemsPlaylist: playlistId[{}] - {}", playlistId, request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+		if (StringUtils.isEmpty(playlistId)) {
+			throw new IllegalArgumentException();
+		}
+
+		URIBuilder uriBuilder = getUriBuilder(PLAYLISTS_PATH, playlistId, TRACKS_PATH);
+		List<String> uris = request.getUris();
+		String join = String.join(",", uris);
+		uriBuilder.addParameter("uris", join);
+		URI uri = getUri(uriBuilder);
+		HttpResponseWrapper response = doPut(uri, request);
 		return response.parseResponse(PlaylistSnapshotObject.class);
 	}
 }
