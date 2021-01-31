@@ -2,6 +2,7 @@ package com.victorlh.spotify.apiclient.httpmanager;
 
 import com.victorlh.spotify.apiclient.credentials.SpotifyApiCredentials;
 import com.victorlh.spotify.apiclient.httpmanager.exceptions.SpotifyApiException;
+import com.victorlh.spotify.apiclient.httpmanager.internal.HttpDeleteBody;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpEntity;
@@ -63,6 +64,18 @@ public abstract class AbstractHttpManager implements HttpManager {
 		HttpClient httpClient = createHttpClient();
 		HttpDelete httpDelete = new HttpDelete(uri);
 		addAuthorizationHeader(httpDelete);
+
+		HttpResponse httpResponse = httpClient.execute(httpDelete);
+		return parserResponse(httpResponse);
+	}
+
+	@Override
+	public HttpResponseWrapper doDelete(URI uri, Object body) throws IOException, SpotifyApiException {
+		HttpClient httpClient = createHttpClient();
+		HttpDeleteBody httpDelete = new HttpDeleteBody(uri);
+		addAuthorizationHeader(httpDelete);
+		httpDelete.addHeader(HttpHeaders.CONTENT_TYPE, getContentType());
+		addBodyEntity(httpDelete, body);
 
 		HttpResponse httpResponse = httpClient.execute(httpDelete);
 		return parserResponse(httpResponse);

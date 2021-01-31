@@ -23,6 +23,9 @@ class JsonHttpManager extends AbstractHttpManager {
 	protected void addBodyEntity(HttpEntityEnclosingRequestBase httpRequest, Object body) {
 		try {
 			String json = objectMapper.writeValueAsString(body);
+			if(log.isTraceEnabled()) {
+				log.trace("Request Body: {}", json);
+			}
 			StringEntity stringEntity = new StringEntity(json);
 			httpRequest.setEntity(stringEntity);
 		} catch (JsonProcessingException | UnsupportedEncodingException e) {

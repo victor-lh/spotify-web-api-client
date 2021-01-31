@@ -16,6 +16,8 @@ public interface HttpManager {
 
 	HttpResponseWrapper doDelete(URI uri) throws IOException, SpotifyApiException;
 
+	HttpResponseWrapper doDelete(URI uri, Object body) throws IOException, SpotifyApiException;
+
 	static HttpManager createJsonHttpManger(SpotifyApiCredentials credentials) {
 		return new JsonHttpManager(credentials);
 	}

@@ -63,9 +63,12 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Request URI: {}", uri);
+			}
 			HttpResponseWrapper response = httpManger.doGet(uri);
 			if (log.isDebugEnabled()) {
-				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+				log.debug("HTTP Response URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
 			}
 			return response;
 		} catch (IOException e) {
@@ -80,9 +83,32 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Request URI: {}", uri);
+			}
 			HttpResponseWrapper response = httpManger.doDelete(uri);
 			if (log.isDebugEnabled()) {
-				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+				log.debug("HTTP Response URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+			}
+			return response;
+		} catch (IOException e) {
+			log.error(e.getLocalizedMessage(), e);
+			throw new RuntimeException(e);
+		} catch (SpotifyApiException e) {
+			throw new SpotifyGeneralApiException(e.getResponse());
+		}
+	}
+
+	protected HttpResponseWrapper doDelete(URI uri, Object data) throws SpotifyGeneralApiException {
+		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
+		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Request URI: {}, data: {}", uri, data);
+			}
+			HttpResponseWrapper response = httpManger.doDelete(uri, data);
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Response URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
 			}
 			return response;
 		} catch (IOException e) {
@@ -97,9 +123,12 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Request URI: {}, data: {}", uri, data);
+			}
 			HttpResponseWrapper response = httpManger.doPost(uri, data);
 			if (log.isDebugEnabled()) {
-				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+				log.debug("HTTP Response URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
 			}
 			return response;
 		} catch (IOException e) {

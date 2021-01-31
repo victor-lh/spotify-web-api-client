@@ -14,7 +14,6 @@ import java.util.List;
 @ToString
 public class GetPlaylistRequest {
 
-	private final String playlistId;
 	private final CountryCode market;
 	//TODO - Modificar por un builder de query
 	private final String fields;

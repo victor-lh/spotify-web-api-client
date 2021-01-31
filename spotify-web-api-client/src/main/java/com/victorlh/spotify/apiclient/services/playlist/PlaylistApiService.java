@@ -4,14 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
-import com.victorlh.spotify.apiclient.models.objects.ImageObject;
-import com.victorlh.spotify.apiclient.models.objects.PlaylistObject;
-import com.victorlh.spotify.apiclient.models.objects.PlaylistTrackObject;
-import com.victorlh.spotify.apiclient.models.objects.SimplifiedPlaylistObject;
+import com.victorlh.spotify.apiclient.models.objects.*;
 import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
-import com.victorlh.spotify.apiclient.services.playlist.models.GetPlaylistItemsRequest;
-import com.victorlh.spotify.apiclient.services.playlist.models.GetPlaylistRequest;
+import com.victorlh.spotify.apiclient.services.playlist.models.*;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -85,12 +81,11 @@ public class PlaylistApiService extends AbstractApiService {
 		return response.parseResponse(typeReference);
 	}
 
-	public PlaylistObject getPlaylist(GetPlaylistRequest request) throws SpotifyGeneralApiException {
-		log.trace("Call PlaylistApiService#getPlaylist: {}", request);
+	public PlaylistObject getPlaylist(String playlistId, GetPlaylistRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#getPlaylist: playlistId[{}] - {}", playlistId, request);
 		if (request == null) {
 			throw new IllegalArgumentException();
 		}
-		String playlistId = request.getPlaylistId();
 		if (StringUtils.isEmpty(playlistId)) {
 			throw new IllegalArgumentException();
 		}
@@ -108,12 +103,11 @@ public class PlaylistApiService extends AbstractApiService {
 		return response.parseResponse(PlaylistObject.class);
 	}
 
-	public PagingObject<PlaylistTrackObject> getPlaylistItems(GetPlaylistItemsRequest request) throws SpotifyGeneralApiException {
-		log.trace("Call PlaylistApiService#getPlaylistItems: {}", request);
+	public PagingObject<PlaylistTrackObject> getPlaylistItems(String playlistId, GetPlaylistItemsRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#getPlaylistItems: playlistId[{}] - {}", playlistId, request);
 		if (request == null) {
 			throw new IllegalArgumentException();
 		}
-		String playlistId = request.getPlaylistId();
 		if (StringUtils.isEmpty(playlistId)) {
 			throw new IllegalArgumentException();
 		}
@@ -159,5 +153,60 @@ public class PlaylistApiService extends AbstractApiService {
 		TypeReference<List<ImageObject>> typeReference = new TypeReference<>() {
 		};
 		return response.parseResponse(typeReference);
+	}
+
+	public PlaylistObject createPlaylist(String userId, PlaylistDataRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#createPlaylist: userId[{}] - {}", userId, request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+		if (StringUtils.isEmpty(userId)) {
+			throw new IllegalArgumentException();
+		}
+
+		URI uri = getUri(USERS_PATH, userId, PLAYLISTS_PATH);
+		HttpResponseWrapper response = doPost(uri, request);
+		return response.parseResponse(PlaylistObject.class);
+	}
+
+	public void editPlaylistData(String playlistId, PlaylistDataRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#editPlaylistData: playlistId[{}] - {}", playlistId, request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+		if (StringUtils.isEmpty(playlistId)) {
+			throw new IllegalArgumentException();
+		}
+
+		URI uri = getUri(PLAYLISTS_PATH, playlistId);
+		doPut(uri, request);
+	}
+
+	public PlaylistSnapshotObject addItemsPlaylist(String playlistId, AddItemsPlaylistRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#addItemsPlaylist: playlistId[{}] - {}", playlistId, request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+		if (StringUtils.isEmpty(playlistId)) {
+			throw new IllegalArgumentException();
+		}
+
+		URI uri = getUri(PLAYLISTS_PATH, playlistId, TRACKS_PATH);
+		HttpResponseWrapper response = doPost(uri, request);
+		return response.parseResponse(PlaylistSnapshotObject.class);
+	}
+
+	public PlaylistSnapshotObject removeItemsPlaylist(String playlistId, RemoveItemsPlaylistRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#removeItemsPlaylist: playlistId[{}] - {}", playlistId, request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+		if (StringUtils.isEmpty(playlistId)) {
+			throw new IllegalArgumentException();
+		}
+
+		URI uri = getUri(PLAYLISTS_PATH, playlistId, TRACKS_PATH);
+		HttpResponseWrapper response = doDelete(uri, request);
+		return response.parseResponse(PlaylistSnapshotObject.class);
 	}
 }
