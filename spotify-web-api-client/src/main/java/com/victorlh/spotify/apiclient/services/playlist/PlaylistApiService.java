@@ -2,8 +2,11 @@ package com.victorlh.spotify.apiclient.services.playlist;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.victorlh.spotify.apiclient.SpotifyApiClient;
+import com.victorlh.spotify.apiclient.credentials.TokenApiCredentials;
 import com.victorlh.spotify.apiclient.exceptions.SpotifyGeneralApiException;
+import com.victorlh.spotify.apiclient.httpmanager.HttpManager;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
+import com.victorlh.spotify.apiclient.httpmanager.exceptions.SpotifyApiException;
 import com.victorlh.spotify.apiclient.models.objects.*;
 import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
@@ -13,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class PlaylistApiService extends AbstractApiService {
@@ -227,5 +230,27 @@ public class PlaylistApiService extends AbstractApiService {
 		URI uri = getUri(uriBuilder);
 		HttpResponseWrapper response = doPut(uri, request);
 		return response.parseResponse(PlaylistSnapshotObject.class);
+	}
+
+	public void uploadPlaylistImage(String playlistId, byte[] image) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#uploadPlaylistImage: playlistId[{}] - {}", playlistId, image);
+
+		URI uri = getUri(PLAYLISTS_PATH, playlistId, IMAGES_PATH);
+		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
+		HttpManager httpManger = HttpManager.createImageJpegHttpManger(tokenApiCredentials);
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Request URI: {}, data: {}", uri, image);
+			}
+			HttpResponseWrapper response = httpManger.doPut(uri, image);
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Response URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+			}
+		} catch (IOException e) {
+			log.error(e.getLocalizedMessage(), e);
+			throw new RuntimeException(e);
+		} catch (SpotifyApiException e) {
+			throw new SpotifyGeneralApiException(e.getResponse());
+		}
 	}
 }

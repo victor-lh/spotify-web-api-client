@@ -25,4 +25,9 @@ public interface HttpManager {
 	static HttpManager createFormUrlEncodedHttpManger(SpotifyApiCredentials credentials) {
 		return new FormUrlEncodedHttpManager(credentials);
 	}
+
+	static HttpManager createImageJpegHttpManger(SpotifyApiCredentials credentials) {
+		return new ImageJpegHttpManager(credentials);
+	}
+
 }
