@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.victorlh.spotify.apiclient.models.IPlayableItem;
 import com.victorlh.spotify.apiclient.models.deserializer.PlayableItemDeserializer;
 import com.victorlh.spotify.apiclient.models.enums.CurrentlyPlayingType;
+import com.victorlh.spotify.apiclient.models.enums.RepeatState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class CurrentlyPlayingContextObject {
 	@JsonProperty("progress_ms")
 	private Integer progressMs;
 	@JsonProperty("repeat_state")
-	private String repeatState;
+	private RepeatState repeatState;
 	@JsonProperty("shuffle_state")
 	private String shuffleState;
 	private Long timestamp;

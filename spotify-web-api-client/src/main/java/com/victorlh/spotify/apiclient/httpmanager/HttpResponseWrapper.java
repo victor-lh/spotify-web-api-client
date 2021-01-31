@@ -2,7 +2,6 @@ package com.victorlh.spotify.apiclient.httpmanager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +53,7 @@ public class HttpResponseWrapper {
 		return status >= 400;
 	}
 
-	public <T> PagingObject<T> parseResponse(TypeReference<PagingObject<T>> typeReference) {
+	public <T> T parseResponse(TypeReference<T> typeReference) {
 		byte[] data = entity.getData();
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();

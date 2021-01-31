@@ -17,5 +17,5 @@ public class PlayHistoryObject {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	@JsonProperty("played_at")
 	private Date playedAt;
-	private SimplifiedTrackObject track;
+	private TrackObject track;
 }
