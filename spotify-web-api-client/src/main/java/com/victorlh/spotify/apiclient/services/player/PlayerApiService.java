@@ -14,6 +14,7 @@ import com.victorlh.spotify.apiclient.services.player.models.PlayPlaybackRequest
 import com.victorlh.spotify.apiclient.services.player.models.TransferPlaybackRequest;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class PlayerApiService extends AbstractApiService {
 	private static final String DEVICES_PATH = "devices";
 	private static final String CURRENTLY_PLAYING_PATH = "currently-playing";
 	private static final String PLAY_PATH = "play";
+	private static final String PAUSE_PATH = "pause";
 
 	@Builder
 	public PlayerApiService(SpotifyApiClient spotifyApiClient) {
@@ -100,6 +102,21 @@ public class PlayerApiService extends AbstractApiService {
 		URI uri = getUri(uriBuilder);
 
 		doPut(uri, request);
+	}
+
+	public void pausePlayback() throws SpotifyGeneralApiException {
+		pausePlayback(null);
+	}
+
+	public void pausePlayback(String deviceId) throws SpotifyGeneralApiException {
+		log.trace("Call PlayerApiService#pausePlayback: {}", deviceId);
+
+		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH, PAUSE_PATH);
+		if (StringUtils.isNotEmpty(deviceId)) {
+			uriBuilder.addParameter("device_id", deviceId);
+		}
+		URI uri = getUri(uriBuilder);
+		doPut(uri, null);
 	}
 
 	private void addAdditionalTypes(URIBuilder uriBuilder, List<PlayableType> additionalTypes) {
