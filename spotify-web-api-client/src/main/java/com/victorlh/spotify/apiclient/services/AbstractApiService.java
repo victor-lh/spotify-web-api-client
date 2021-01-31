@@ -8,8 +8,10 @@ import com.victorlh.spotify.apiclient.exceptions.SpotifyWebApiClientException;
 import com.victorlh.spotify.apiclient.httpmanager.HttpManager;
 import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.httpmanager.exceptions.SpotifyApiException;
+import com.victorlh.spotify.apiclient.models.enums.PlayableType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -161,5 +164,18 @@ public class AbstractApiService {
 		}
 		String idsCollect = String.join(",", ids);
 		uriBuilder.addParameter("ids", idsCollect);
+	}
+
+	protected void addDeviceId(URIBuilder uriBuilder, String deviceId) {
+		if (StringUtils.isNotEmpty(deviceId)) {
+			uriBuilder.addParameter("device_id", deviceId);
+		}
+	}
+
+	protected void addAdditionalTypes(URIBuilder uriBuilder, List<PlayableType> additionalTypes) {
+		if (additionalTypes != null && !additionalTypes.isEmpty()) {
+			String types = additionalTypes.stream().map(Enum::name).collect(Collectors.joining(","));
+			uriBuilder.addParameter("additional_types", types);
+		}
 	}
 }

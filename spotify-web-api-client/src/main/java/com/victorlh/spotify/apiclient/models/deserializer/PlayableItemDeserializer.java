@@ -26,14 +26,35 @@ public class PlayableItemDeserializer extends StdDeserializer<IPlayableItem> {
 
 	protected IPlayableItem getPlayable(JsonParser jp, JsonNode node) throws JsonProcessingException {
 		ObjectCodec codec = jp.getCodec();
-		String type = node.get("type").asText();
-		if (StringUtils.equals(PlayableType.track.name(), type)) {
-			return codec.treeToValue(node, TrackObject.class);
-		}
-		if (StringUtils.equals(PlayableType.episode.name(), type)) {
-			return codec.treeToValue(node, EpisodeObject.class);
+		JsonNode typeNode = node.get("type");
+		String type = typeNode == null ? null : typeNode.asText();
+		if (type != null) {
+			if (StringUtils.equals(PlayableType.track.name(), type)) {
+				return codec.treeToValue(node, TrackObject.class);
+			}
+			if (StringUtils.equals(PlayableType.episode.name(), type)) {
+				return codec.treeToValue(node, EpisodeObject.class);
+			}
+		} else {
+			return getPlayableByError(jp, node);
 		}
 		return null;
+	}
+
+	protected IPlayableItem getPlayableByError(JsonParser jp, JsonNode node) throws JsonProcessingException {
+		ObjectCodec codec = jp.getCodec();
+		JsonProcessingException error;
+		try {
+			return codec.treeToValue(node, TrackObject.class);
+		} catch (JsonProcessingException e) {
+			error = e;
+		}
+		try {
+			return codec.treeToValue(node, EpisodeObject.class);
+		} catch (JsonProcessingException ignored) {
+		}
+		throw error;
+
 	}
 
 	@Override

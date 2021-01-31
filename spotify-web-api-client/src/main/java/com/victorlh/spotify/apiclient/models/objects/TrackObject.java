@@ -44,5 +44,9 @@ public class TrackObject implements IPlayableItem {
 	private Integer trackNumber;
 	private PlayableType type;
 	private String uri;
+	@JsonProperty(defaultValue = "false")
+	private Boolean episode;
+	@JsonProperty(defaultValue = "true")
+	private Boolean track;
 
 }

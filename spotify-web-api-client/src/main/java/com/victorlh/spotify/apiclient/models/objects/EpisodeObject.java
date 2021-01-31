@@ -42,5 +42,9 @@ public class EpisodeObject implements IPlayableItem {
 	private SimplifiedShowObject show;
 	private PlayableType type;
 	private String uri;
+	@JsonProperty(defaultValue = "true")
+	private Boolean episode;
+	@JsonProperty(defaultValue = "false")
+	private Boolean track;
 
 }

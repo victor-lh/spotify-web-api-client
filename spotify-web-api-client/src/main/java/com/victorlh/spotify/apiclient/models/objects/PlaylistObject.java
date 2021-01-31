@@ -1,6 +1,8 @@
 package com.victorlh.spotify.apiclient.models.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.victorlh.spotify.apiclient.models.pagination.PagingObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +28,11 @@ public class PlaylistObject {
 	private Boolean isPublic;
 	@JsonProperty("snapshot_id")
 	private String snapshotId;
-	private List<PlaylistTrackObject> tracks;
+	private PagingObject<PlaylistTrackObject> tracks;
 	private String type;
 	private String uri;
+	@JsonProperty("primary_color")
+	private JsonNode primaryColor;
 
 
 }

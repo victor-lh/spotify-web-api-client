@@ -19,7 +19,6 @@ import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class PlayerApiService extends AbstractApiService {
@@ -241,18 +240,5 @@ public class PlayerApiService extends AbstractApiService {
 		uriBuilder.addParameter("uri", itemUri);
 		URI uri = getUri(uriBuilder);
 		doPost(uri, null);
-	}
-
-	private void addDeviceId(URIBuilder uriBuilder, String deviceId) {
-		if (StringUtils.isNotEmpty(deviceId)) {
-			uriBuilder.addParameter("device_id", deviceId);
-		}
-	}
-
-	private void addAdditionalTypes(URIBuilder uriBuilder, List<PlayableType> additionalTypes) {
-		if (additionalTypes != null && !additionalTypes.isEmpty()) {
-			String types = additionalTypes.stream().map(Enum::name).collect(Collectors.joining(","));
-			uriBuilder.addParameter("additional_types", types);
-		}
 	}
 }
