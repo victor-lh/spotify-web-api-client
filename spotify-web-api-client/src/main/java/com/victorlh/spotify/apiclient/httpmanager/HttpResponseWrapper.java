@@ -38,6 +38,9 @@ public class HttpResponseWrapper {
 
 	public <T> T parseResponse(Class<T> tClass) {
 		byte[] data = entity.getData();
+		if (data.length == 0) {
+			return null;
+		}
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.readValue(data, tClass);

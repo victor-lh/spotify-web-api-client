@@ -30,6 +30,8 @@ public class PlayerApiService extends AbstractApiService {
 	private static final String CURRENTLY_PLAYING_PATH = "currently-playing";
 	private static final String PLAY_PATH = "play";
 	private static final String PAUSE_PATH = "pause";
+	private static final String NEXT_PATH = "next";
+	private static final String PREVIOUS_PATH = "previous";
 
 	@Builder
 	public PlayerApiService(SpotifyApiClient spotifyApiClient) {
@@ -104,10 +106,6 @@ public class PlayerApiService extends AbstractApiService {
 		doPut(uri, request);
 	}
 
-	public void pausePlayback() throws SpotifyGeneralApiException {
-		pausePlayback(null);
-	}
-
 	public void pausePlayback(String deviceId) throws SpotifyGeneralApiException {
 		log.trace("Call PlayerApiService#pausePlayback: {}", deviceId);
 
@@ -117,6 +115,28 @@ public class PlayerApiService extends AbstractApiService {
 		}
 		URI uri = getUri(uriBuilder);
 		doPut(uri, null);
+	}
+
+	public void nextTrackPlayback(String deviceId) throws SpotifyGeneralApiException {
+		log.trace("Call PlayerApiService#nextTrackPlayback: {}", deviceId);
+
+		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH, NEXT_PATH);
+		if (StringUtils.isNotEmpty(deviceId)) {
+			uriBuilder.addParameter("device_id", deviceId);
+		}
+		URI uri = getUri(uriBuilder);
+		doPost(uri, null);
+	}
+
+	public void previousTrackPlayback(String deviceId) throws SpotifyGeneralApiException {
+		log.trace("Call PlayerApiService#previousTrackPlayback: {}", deviceId);
+
+		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH, PREVIOUS_PATH);
+		if (StringUtils.isNotEmpty(deviceId)) {
+			uriBuilder.addParameter("device_id", deviceId);
+		}
+		URI uri = getUri(uriBuilder);
+		doPost(uri, null);
 	}
 
 	private void addAdditionalTypes(URIBuilder uriBuilder, List<PlayableType> additionalTypes) {
