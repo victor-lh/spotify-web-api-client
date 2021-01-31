@@ -111,9 +111,12 @@ public class AbstractApiService {
 		TokenApiCredentials tokenApiCredentials = spotifyApiClient.getTokenApiCredentials();
 		HttpManager httpManger = HttpManager.createJsonHttpManger(tokenApiCredentials);
 		try {
+			if (log.isDebugEnabled()) {
+				log.debug("HTTP Request URI: {}, data: {}", uri, data);
+			}
 			HttpResponseWrapper response = httpManger.doPut(uri, data);
 			if (log.isDebugEnabled()) {
-				log.debug("Request URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
+				log.debug("HTTP Response URI: {}, status: {}, message: {}, data: {}", uri, response.getStatus(), response.getMessage(), response.responseBodyString());
 			}
 			return response;
 		} catch (IOException e) {

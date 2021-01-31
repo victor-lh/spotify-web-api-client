@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CurrentlyPlayingObject {
 
+	private ActionsDisallowsObject actions;
 	private ContextObject context;
 	@JsonProperty("currently_playing_type")
 	private CurrentlyPlayingType currentlyPlayingType;

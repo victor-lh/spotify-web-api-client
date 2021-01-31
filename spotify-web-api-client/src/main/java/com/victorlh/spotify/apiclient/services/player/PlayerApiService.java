@@ -6,13 +6,14 @@ import com.victorlh.spotify.apiclient.httpmanager.HttpResponseWrapper;
 import com.victorlh.spotify.apiclient.models.enums.PlayableType;
 import com.victorlh.spotify.apiclient.models.lists.ListDevicesObject;
 import com.victorlh.spotify.apiclient.models.objects.CurrentlyPlayingContextObject;
+import com.victorlh.spotify.apiclient.models.objects.CurrentlyPlayingObject;
 import com.victorlh.spotify.apiclient.services.AbstractApiService;
+import com.victorlh.spotify.apiclient.services.player.models.GetCurrentlyPlayingTrackRequest;
 import com.victorlh.spotify.apiclient.services.player.models.GetPlaybackInformationRequest;
+import com.victorlh.spotify.apiclient.services.player.models.PlayPlaybackRequest;
 import com.victorlh.spotify.apiclient.services.player.models.TransferPlaybackRequest;
 import lombok.Builder;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
@@ -25,6 +26,8 @@ public class PlayerApiService extends AbstractApiService {
 	private static final String ME_PATH = "me";
 	private static final String PLAYER_PATH = "player";
 	private static final String DEVICES_PATH = "devices";
+	private static final String CURRENTLY_PLAYING_PATH = "currently-playing";
+	private static final String PLAY_PATH = "play";
 
 	@Builder
 	public PlayerApiService(SpotifyApiClient spotifyApiClient) {
@@ -33,16 +36,14 @@ public class PlayerApiService extends AbstractApiService {
 
 	public CurrentlyPlayingContextObject getPlaybackInformation(GetPlaybackInformationRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call PlayerApiService#getPlaybackInformation: {}", request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
 
 		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH);
-		if (request != null) {
-			addMarketToUriBuilder(uriBuilder, request.getMarket());
-			List<PlayableType> additionalTypes = request.getAdditionalTypes();
-			if (additionalTypes != null && !additionalTypes.isEmpty()) {
-				String types = additionalTypes.stream().map(Enum::name).collect(Collectors.joining(","));
-				uriBuilder.addParameter("additional_types", types);
-			}
-		}
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
+		List<PlayableType> additionalTypes = request.getAdditionalTypes();
+		addAdditionalTypes(uriBuilder, additionalTypes);
 		URI uri = getUri(uriBuilder);
 
 		HttpResponseWrapper response = doGet(uri);
@@ -59,11 +60,52 @@ public class PlayerApiService extends AbstractApiService {
 
 	public void transferPlayback(TransferPlaybackRequest request) throws SpotifyGeneralApiException {
 		log.trace("Call PlayerApiService#tranferPlayback: {}", request);
-		if(request == null) {
+		if (request == null) {
 			throw new IllegalArgumentException();
 		}
 
 		URI uri = getUri(ME_PATH, PLAYER_PATH);
 		doPut(uri, request);
+	}
+
+	public CurrentlyPlayingObject getCurrentlyPlayingTrack(GetCurrentlyPlayingTrackRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlayerApiService#getCurrentlyPlayingTrack: {}", request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+
+		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH, CURRENTLY_PLAYING_PATH);
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
+		addMarketToUriBuilder(uriBuilder, request.getMarket());
+		List<PlayableType> additionalTypes = request.getAdditionalTypes();
+		addAdditionalTypes(uriBuilder, additionalTypes);
+		URI uri = getUri(uriBuilder);
+
+		HttpResponseWrapper response = doGet(uri);
+		return response.parseResponse(CurrentlyPlayingObject.class);
+	}
+
+	public void playPlayback(PlayPlaybackRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlayerApiService#playPlayback: {}", request);
+		if (request == null) {
+			throw new IllegalArgumentException();
+		}
+
+		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYER_PATH, PLAY_PATH);
+		List<String> deviceIds = request.getDeviceIds();
+		if (deviceIds != null && !deviceIds.isEmpty()) {
+			String join = String.join(",", deviceIds);
+			uriBuilder.addParameter("device_id", join);
+		}
+		URI uri = getUri(uriBuilder);
+
+		doPut(uri, request);
+	}
+
+	private void addAdditionalTypes(URIBuilder uriBuilder, List<PlayableType> additionalTypes) {
+		if (additionalTypes != null && !additionalTypes.isEmpty()) {
+			String types = additionalTypes.stream().map(Enum::name).collect(Collectors.joining(","));
+			uriBuilder.addParameter("additional_types", types);
+		}
 	}
 }
