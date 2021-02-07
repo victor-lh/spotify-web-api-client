@@ -84,7 +84,8 @@ public class CredentialsApiService {
         HttpResponseWrapper response;
         try {
             response = httpManger.doPost(uri, data);
-            log.debug("Request token: {}", response.toString());
+            log.debug("Request token response: {}", response.toString());
+            log.trace("Spotify token: {}", response.responseBodyString());
         } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
@@ -125,7 +126,8 @@ public class CredentialsApiService {
         HttpResponseWrapper response;
         try {
             response = httpManger.doPost(uri, data);
-            log.debug("Request token by refresh_token: {}", response.toString());
+            log.debug("Request token by refresh_token response: {}", response.toString());
+            log.trace("Spotify token by refresh_token: {}", response.responseBodyString());
         } catch (IOException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new RuntimeException(e);
