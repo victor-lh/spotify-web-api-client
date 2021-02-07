@@ -1,10 +1,11 @@
 package com.victorlh.spotify.apiclient.services.credentials.models;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 @RequiredArgsConstructor
 public enum AuthorizationScope {
-	
+
 	UGC_IMAGE_UPLOAD("ugc-image-upload"),
 	USER_READ_RECENTLY_PLAYED("user-read-recently-played"),
 	USER_TOP_READ("user-top-read"),
@@ -26,4 +27,14 @@ public enum AuthorizationScope {
 	USER_READ_PRIVATE("user-read-private");
 
 	public final String scope;
+
+	public static AuthorizationScope getScope(String scope) {
+		AuthorizationScope[] values = values();
+		for (AuthorizationScope v : values) {
+			if(StringUtils.equals(v.name(), scope) || StringUtils.equals(v.scope, scope)) {
+				return v;
+			}
+		}
+		return null;
+	}
 }
