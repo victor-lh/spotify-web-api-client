@@ -29,7 +29,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		SpotifyApiClient spotifyApiClient = spotifyClientService.getSpotifyApiClient();
 		PlaylistApiService playlistApiService = spotifyApiClient.getPlaylistApiService();
 		try {
-			return playlistApiService.getCurrentUserPlaylist(limit);
+			return playlistApiService.getCurrentUserPlaylist(GetListPlaylistsRequest.builder().limit(limit).build());
 		} catch (SpotifyGeneralApiException e) {
 			throw new SpotifyApiExceptionRuntime(e);
 		}

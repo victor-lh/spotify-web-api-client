@@ -20,13 +20,11 @@ import com.victorlh.spotify.apiclient.services.tracks.TracksApiService;
 import com.victorlh.spotify.apiclient.services.userprofile.UserProfileApiService;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 
 @Builder
 @Getter
 public class SpotifyApiClient {
 
-	@NonNull
 	private final String apiClientId;
 	private final String apiClientSecret;
 	private final Credentials credentials;

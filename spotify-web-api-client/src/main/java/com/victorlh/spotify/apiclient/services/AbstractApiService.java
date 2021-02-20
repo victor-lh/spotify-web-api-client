@@ -163,6 +163,12 @@ public class AbstractApiService {
 		addLimitToUriBuilder(uriBuilder, limit, 50);
 	}
 
+	protected void addOffsetToUriBuilder(URIBuilder uriBuilder, Integer offset) {
+		if(offset != null) {
+			uriBuilder.addParameter("offset", offset.toString());
+		}
+	}
+
 	protected void addLimitToUriBuilder(URIBuilder uriBuilder, Integer limit, Integer max) {
 		if (limit != null) {
 			if (limit < 1) {

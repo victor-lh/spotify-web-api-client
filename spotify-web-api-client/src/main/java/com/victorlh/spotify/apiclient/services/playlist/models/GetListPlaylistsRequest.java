@@ -12,13 +12,8 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
-public class GetPlaylistItemsRequest {
+public class GetListPlaylistsRequest {
 
-	private final CountryCode market;
-	//TODO - Modificar por un builder de query
-	private final String fields;
-	@Singular
-	private final List<PlayableType> additionalTypes;
 	private final Integer limit;
 	private final Integer offset;
 }

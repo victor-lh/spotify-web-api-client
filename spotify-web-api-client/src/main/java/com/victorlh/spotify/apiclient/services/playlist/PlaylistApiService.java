@@ -38,11 +38,12 @@ public class PlaylistApiService extends AbstractApiService {
 		return getCurrentUserPlaylist(null);
 	}
 
-	public PagingObject<SimplifiedPlaylistObject> getCurrentUserPlaylist(Integer limit) throws SpotifyGeneralApiException {
-		log.trace("Call PlaylistApiService#getCurrentUserPlaylist: limit[{}]", limit);
+	public PagingObject<SimplifiedPlaylistObject> getCurrentUserPlaylist(GetListPlaylistsRequest request) throws SpotifyGeneralApiException {
+		log.trace("Call PlaylistApiService#getCurrentUserPlaylist: limit[{}]", request);
 
 		URIBuilder uriBuilder = getUriBuilder(ME_PATH, PLAYLISTS_PATH);
-		addLimitToUriBuilder(uriBuilder, limit);
+		addLimitToUriBuilder(uriBuilder, request == null ? null : request.getLimit());
+		addOffsetToUriBuilder(uriBuilder, request == null ? null : request.getOffset());
 		URI uri = getUri(uriBuilder);
 
 		HttpResponseWrapper response = doGet(uri);
@@ -120,6 +121,7 @@ public class PlaylistApiService extends AbstractApiService {
 		addMarketToUriBuilder(uriBuilder, request.getMarket());
 		addAdditionalTypes(uriBuilder, request.getAdditionalTypes());
 		addLimitToUriBuilder(uriBuilder, request.getLimit(), 100);
+		addOffsetToUriBuilder(uriBuilder, request.getOffset());
 		String fields = request.getFields();
 		if (StringUtils.isNotEmpty(fields)) {
 			uriBuilder.addParameter("fields", fields);
