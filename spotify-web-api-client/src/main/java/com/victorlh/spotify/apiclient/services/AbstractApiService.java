@@ -173,7 +173,7 @@ public class AbstractApiService {
 		if (limit != null) {
 			if (limit < 1) {
 				throw new SpotifyWebApiClientException("Limit minimum 1");
-			} else if (limit > 50) {
+			} else if (limit > max) {
 				throw new SpotifyWebApiClientException("Limit maximum " + max);
 			}
 			uriBuilder.addParameter("limit", limit.toString());
