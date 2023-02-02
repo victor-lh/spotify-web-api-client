@@ -5,8 +5,8 @@ server:
   port: 8080
 
 spotify:
-  clientId: 123
-  clientSecret: 123
+  clientId: 772da04c86ef487b887319b1792b8f4d
+  clientSecret: e27d7419cb7e4d18b63e6e35854b9d05
   redirectUrl: http://localhost:8080/redirect
 
 logging:

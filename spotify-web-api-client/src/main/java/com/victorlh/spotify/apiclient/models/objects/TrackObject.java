@@ -15,7 +15,7 @@ import java.util.List;
 public class TrackObject implements IPlayableItem {
 
 	private SimplifiedAlbumObject album;
-	private List<ArtistObject> artists;
+	private List<SimplifiedArtistObject> artists;
 	@JsonProperty("available_markets")
 	private List<String> availableMarkets;
 	@JsonProperty("disc_number")
